@@ -3,15 +3,16 @@ package nft
 import (
 	"math/rand"
 
+	"sesamenet/testutil/sample"
+	nftsimulation "sesamenet/x/nft/simulation"
+	"sesamenet/x/nft/types"
+
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	simappparams "github.com/cosmos/cosmos-sdk/simapp/params"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/cosmos/cosmos-sdk/x/simulation"
-	"sesamenet/testutil/sample"
-	nftsimulation "sesamenet/x/nft/simulation"
-	"sesamenet/x/nft/types"
 )
 
 // avoid unused import issue
@@ -34,7 +35,6 @@ func (AppModule) GenerateGenesisState(simState *module.SimulationState) {
 		accs[i] = acc.Address.String()
 	}
 	nftGenesis := types.GenesisState{
-		Params: types.DefaultParams(),
 		// this line is used by starport scaffolding # simapp/module/genesisState
 	}
 	simState.GenState[types.ModuleName] = simState.Cdc.MustMarshalJSON(&nftGenesis)

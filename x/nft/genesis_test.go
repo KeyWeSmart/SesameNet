@@ -3,16 +3,16 @@ package nft_test
 import (
 	"testing"
 
-	"github.com/stretchr/testify/require"
 	keepertest "sesamenet/testutil/keeper"
 	"sesamenet/testutil/nullify"
 	"sesamenet/x/nft"
 	"sesamenet/x/nft/types"
+
+	"github.com/stretchr/testify/require"
 )
 
 func TestGenesis(t *testing.T) {
 	genesisState := types.GenesisState{
-		Params: types.DefaultParams(),
 
 		// this line is used by starport scaffolding # genesis/test/state
 	}
