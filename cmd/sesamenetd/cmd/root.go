@@ -34,6 +34,7 @@ import (
 	tmcli "github.com/tendermint/tendermint/libs/cli"
 	"github.com/tendermint/tendermint/libs/log"
 	dbm "github.com/tendermint/tm-db"
+
 	// this line is used by starport scaffolding # root/moduleImport
 
 	"sesamenet/app"
@@ -54,8 +55,8 @@ func NewRootCmd() (*cobra.Command, appparams.EncodingConfig) {
 		WithViper("")
 
 	rootCmd := &cobra.Command{
-		Use:   app.Name + "d",
-		Short: "Stargate CosmosHub App",
+		Use:   app.AccountAddressPrefix,
+		Short: "SesameNet App",
 		PersistentPreRunE: func(cmd *cobra.Command, _ []string) error {
 			// set the default command outputs
 			cmd.SetOut(cmd.OutOrStdout())
