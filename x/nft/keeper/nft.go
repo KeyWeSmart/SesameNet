@@ -40,17 +40,17 @@ func (k Keeper) GetNFTs(ctx sdk.Context, denom string) (nfts []exported.NFT) {
 
 // IsOwner checks if the sender is the owner of the given NFT
 // Return the NFT if true, an error otherwise
-func (k Keeper) IsOwner(ctx sdk.Context, denomID, tokenID string, owner sdk.AccAddress) (types.BaseNFT, error) {
+func (k Keeper) IsOwner(ctx sdk.Context, denomID, tokenID string, owner sdk.AccAddress) (types.BaseNFT, error, bool) {
 	nft, err := k.GetNFT(ctx, denomID, tokenID)
 	if err != nil {
-		return types.BaseNFT{}, err
+		return types.BaseNFT{}, err, false
 	}
 
 	if !owner.Equals(nft.GetOwner()) {
-		return types.BaseNFT{}, sdkerrors.Wrapf(types.ErrUnauthorized, "%s is not the owner of %s/%s", owner.String(), denomID, tokenID)
+		return types.BaseNFT{}, nil, false
 	}
 
-	return nft.(types.BaseNFT), nil
+	return nft.(types.BaseNFT), nil, true
 }
 
 // HasNFT checks if the specified NFT exists
@@ -77,9 +77,13 @@ func (k Keeper) MintNFT(
 	ctx sdk.Context, denomID, tokenID, tokenNm,
 	tokenURI, tokenData string, sender, owner sdk.AccAddress,
 ) error {
-	_, err := k.IsDenomOwner(ctx, denomID, sender)
+	_, err, isDenomOwner := k.IsDenomOwner(ctx, denomID, sender)
 	if err != nil {
 		return err
+	}
+
+	if err == nil && !isDenomOwner {
+		return sdkerrors.Wrapf(types.ErrUnauthorized, "%s is not the owner of denom %s", sender, denomID)
 	}
 
 	return k.MintNFTUnverified(ctx, denomID, tokenID, tokenNm, tokenURI, tokenData, owner)
@@ -121,14 +125,22 @@ func (k Keeper) EditNFT(
 		return sdkerrors.Wrapf(types.ErrInvalidDenom, "denom ID %s not exists", denomID)
 	}
 
-	nft, err := k.IsOwner(ctx, denomID, tokenID, owner)
+	nft, err, isOwner := k.IsOwner(ctx, denomID, tokenID, owner)
 	if err != nil {
 		return err
 	}
 
-	_, err = k.IsDenomOwner(ctx, denomID, owner)
+	if err == nil && !isOwner {
+		return sdkerrors.Wrapf(types.ErrUnauthorized, "%s is not the owner of %s/%s", owner.String(), denomID, tokenID)
+	}
+
+	_, err, isDenomOwner := k.IsDenomOwner(ctx, denomID, owner)
 	if err != nil {
 		return err
+	}
+
+	if err == nil && !isDenomOwner {
+		return sdkerrors.Wrapf(types.ErrUnauthorized, "%s is not the owner of %s", owner, denomID)
 	}
 
 	if types.Modified(tokenNm) {

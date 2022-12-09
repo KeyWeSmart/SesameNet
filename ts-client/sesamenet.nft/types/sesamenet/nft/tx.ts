@@ -39,6 +39,16 @@ export interface MsgEditNFT {
 export interface MsgEditNFTResponse {
 }
 
+export interface MsgTransferNFT {
+  id: string;
+  denomId: string;
+  sender: string;
+  recipient: string;
+}
+
+export interface MsgTransferNFTResponse {
+}
+
 function createBaseMsgIssueDenom(): MsgIssueDenom {
   return { id: "", name: "", schema: "", sender: "", uri: "" };
 }
@@ -438,12 +448,128 @@ export const MsgEditNFTResponse = {
   },
 };
 
+function createBaseMsgTransferNFT(): MsgTransferNFT {
+  return { id: "", denomId: "", sender: "", recipient: "" };
+}
+
+export const MsgTransferNFT = {
+  encode(message: MsgTransferNFT, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.id !== "") {
+      writer.uint32(10).string(message.id);
+    }
+    if (message.denomId !== "") {
+      writer.uint32(18).string(message.denomId);
+    }
+    if (message.sender !== "") {
+      writer.uint32(26).string(message.sender);
+    }
+    if (message.recipient !== "") {
+      writer.uint32(34).string(message.recipient);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgTransferNFT {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgTransferNFT();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = reader.string();
+          break;
+        case 2:
+          message.denomId = reader.string();
+          break;
+        case 3:
+          message.sender = reader.string();
+          break;
+        case 4:
+          message.recipient = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgTransferNFT {
+    return {
+      id: isSet(object.id) ? String(object.id) : "",
+      denomId: isSet(object.denomId) ? String(object.denomId) : "",
+      sender: isSet(object.sender) ? String(object.sender) : "",
+      recipient: isSet(object.recipient) ? String(object.recipient) : "",
+    };
+  },
+
+  toJSON(message: MsgTransferNFT): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    message.denomId !== undefined && (obj.denomId = message.denomId);
+    message.sender !== undefined && (obj.sender = message.sender);
+    message.recipient !== undefined && (obj.recipient = message.recipient);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<MsgTransferNFT>, I>>(object: I): MsgTransferNFT {
+    const message = createBaseMsgTransferNFT();
+    message.id = object.id ?? "";
+    message.denomId = object.denomId ?? "";
+    message.sender = object.sender ?? "";
+    message.recipient = object.recipient ?? "";
+    return message;
+  },
+};
+
+function createBaseMsgTransferNFTResponse(): MsgTransferNFTResponse {
+  return {};
+}
+
+export const MsgTransferNFTResponse = {
+  encode(_: MsgTransferNFTResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgTransferNFTResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgTransferNFTResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgTransferNFTResponse {
+    return {};
+  },
+
+  toJSON(_: MsgTransferNFTResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<MsgTransferNFTResponse>, I>>(_: I): MsgTransferNFTResponse {
+    const message = createBaseMsgTransferNFTResponse();
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   IssueDenom(request: MsgIssueDenom): Promise<MsgIssueDenomResponse>;
   MintNFT(request: MsgMintNFT): Promise<MsgMintNFTResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   EditNFT(request: MsgEditNFT): Promise<MsgEditNFTResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  TransferNFT(request: MsgTransferNFT): Promise<MsgTransferNFTResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -453,6 +579,7 @@ export class MsgClientImpl implements Msg {
     this.IssueDenom = this.IssueDenom.bind(this);
     this.MintNFT = this.MintNFT.bind(this);
     this.EditNFT = this.EditNFT.bind(this);
+    this.TransferNFT = this.TransferNFT.bind(this);
   }
   IssueDenom(request: MsgIssueDenom): Promise<MsgIssueDenomResponse> {
     const data = MsgIssueDenom.encode(request).finish();
@@ -470,6 +597,12 @@ export class MsgClientImpl implements Msg {
     const data = MsgEditNFT.encode(request).finish();
     const promise = this.rpc.request("sesamenet.nft.Msg", "EditNFT", data);
     return promise.then((data) => MsgEditNFTResponse.decode(new _m0.Reader(data)));
+  }
+
+  TransferNFT(request: MsgTransferNFT): Promise<MsgTransferNFTResponse> {
+    const data = MsgTransferNFT.encode(request).finish();
+    const promise = this.rpc.request("sesamenet.nft.Msg", "TransferNFT", data);
+    return promise.then((data) => MsgTransferNFTResponse.decode(new _m0.Reader(data)));
   }
 }
 

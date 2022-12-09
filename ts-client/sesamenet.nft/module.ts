@@ -7,21 +7,22 @@ import { msgTypes } from './registry';
 import { IgniteClient } from "../client"
 import { MissingWalletError } from "../helpers"
 import { Api } from "./rest";
-import { MsgEditNFT } from "./types/sesamenet/nft/tx";
 import { MsgMintNFT } from "./types/sesamenet/nft/tx";
+import { MsgTransferNFT } from "./types/sesamenet/nft/tx";
 import { MsgIssueDenom } from "./types/sesamenet/nft/tx";
+import { MsgEditNFT } from "./types/sesamenet/nft/tx";
 
 
-export { MsgEditNFT, MsgMintNFT, MsgIssueDenom };
+export { MsgMintNFT, MsgTransferNFT, MsgIssueDenom, MsgEditNFT };
 
-type sendMsgEditNFTParams = {
-  value: MsgEditNFT,
+type sendMsgMintNFTParams = {
+  value: MsgMintNFT,
   fee?: StdFee,
   memo?: string
 };
 
-type sendMsgMintNFTParams = {
-  value: MsgMintNFT,
+type sendMsgTransferNFTParams = {
+  value: MsgTransferNFT,
   fee?: StdFee,
   memo?: string
 };
@@ -32,17 +33,27 @@ type sendMsgIssueDenomParams = {
   memo?: string
 };
 
-
-type msgEditNFTParams = {
+type sendMsgEditNFTParams = {
   value: MsgEditNFT,
+  fee?: StdFee,
+  memo?: string
 };
+
 
 type msgMintNFTParams = {
   value: MsgMintNFT,
 };
 
+type msgTransferNFTParams = {
+  value: MsgTransferNFT,
+};
+
 type msgIssueDenomParams = {
   value: MsgIssueDenom,
+};
+
+type msgEditNFTParams = {
+  value: MsgEditNFT,
 };
 
 
@@ -63,20 +74,6 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 
   return {
 		
-		async sendMsgEditNFT({ value, fee, memo }: sendMsgEditNFTParams): Promise<DeliverTxResponse> {
-			if (!signer) {
-					throw new Error('TxClient:sendMsgEditNFT: Unable to sign Tx. Signer is not present.')
-			}
-			try {			
-				const { address } = (await signer.getAccounts())[0]; 
-				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
-				let msg = this.msgEditNFT({ value: MsgEditNFT.fromPartial(value) })
-				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
-			} catch (e: any) {
-				throw new Error('TxClient:sendMsgEditNFT: Could not broadcast Tx: '+ e.message)
-			}
-		},
-		
 		async sendMsgMintNFT({ value, fee, memo }: sendMsgMintNFTParams): Promise<DeliverTxResponse> {
 			if (!signer) {
 					throw new Error('TxClient:sendMsgMintNFT: Unable to sign Tx. Signer is not present.')
@@ -88,6 +85,20 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
 			} catch (e: any) {
 				throw new Error('TxClient:sendMsgMintNFT: Could not broadcast Tx: '+ e.message)
+			}
+		},
+		
+		async sendMsgTransferNFT({ value, fee, memo }: sendMsgTransferNFTParams): Promise<DeliverTxResponse> {
+			if (!signer) {
+					throw new Error('TxClient:sendMsgTransferNFT: Unable to sign Tx. Signer is not present.')
+			}
+			try {			
+				const { address } = (await signer.getAccounts())[0]; 
+				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
+				let msg = this.msgTransferNFT({ value: MsgTransferNFT.fromPartial(value) })
+				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
+			} catch (e: any) {
+				throw new Error('TxClient:sendMsgTransferNFT: Could not broadcast Tx: '+ e.message)
 			}
 		},
 		
@@ -105,14 +116,20 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
-		
-		msgEditNFT({ value }: msgEditNFTParams): EncodeObject {
-			try {
-				return { typeUrl: "/sesamenet.nft.MsgEditNFT", value: MsgEditNFT.fromPartial( value ) }  
+		async sendMsgEditNFT({ value, fee, memo }: sendMsgEditNFTParams): Promise<DeliverTxResponse> {
+			if (!signer) {
+					throw new Error('TxClient:sendMsgEditNFT: Unable to sign Tx. Signer is not present.')
+			}
+			try {			
+				const { address } = (await signer.getAccounts())[0]; 
+				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
+				let msg = this.msgEditNFT({ value: MsgEditNFT.fromPartial(value) })
+				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
 			} catch (e: any) {
-				throw new Error('TxClient:MsgEditNFT: Could not create message: ' + e.message)
+				throw new Error('TxClient:sendMsgEditNFT: Could not broadcast Tx: '+ e.message)
 			}
 		},
+		
 		
 		msgMintNFT({ value }: msgMintNFTParams): EncodeObject {
 			try {
@@ -122,11 +139,27 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 			}
 		},
 		
+		msgTransferNFT({ value }: msgTransferNFTParams): EncodeObject {
+			try {
+				return { typeUrl: "/sesamenet.nft.MsgTransferNFT", value: MsgTransferNFT.fromPartial( value ) }  
+			} catch (e: any) {
+				throw new Error('TxClient:MsgTransferNFT: Could not create message: ' + e.message)
+			}
+		},
+		
 		msgIssueDenom({ value }: msgIssueDenomParams): EncodeObject {
 			try {
 				return { typeUrl: "/sesamenet.nft.MsgIssueDenom", value: MsgIssueDenom.fromPartial( value ) }  
 			} catch (e: any) {
 				throw new Error('TxClient:MsgIssueDenom: Could not create message: ' + e.message)
+			}
+		},
+		
+		msgEditNFT({ value }: msgEditNFTParams): EncodeObject {
+			try {
+				return { typeUrl: "/sesamenet.nft.MsgEditNFT", value: MsgEditNFT.fromPartial( value ) }  
+			} catch (e: any) {
+				throw new Error('TxClient:MsgEditNFT: Could not create message: ' + e.message)
 			}
 		},
 		
