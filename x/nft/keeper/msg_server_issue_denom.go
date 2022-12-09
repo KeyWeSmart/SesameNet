@@ -15,6 +15,8 @@ func (k msgServer) IssueDenom(goCtx context.Context, msg *types.MsgIssueDenom) (
 	}
 
 	ctx := sdk.UnwrapSDKContext(goCtx)
+
+	// create an empty access control map for this device NFT denom
 	emptyAccessMap := make(map[string]bool)
 	if err := k.Keeper.IssueDenom(ctx, msg.Id, msg.Name, msg.Schema, msg.Uri, sender, emptyAccessMap); err != nil {
 		return nil, err

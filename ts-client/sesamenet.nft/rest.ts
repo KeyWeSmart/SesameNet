@@ -11,6 +11,8 @@
 
 export type NftMsgIssueDenomResponse = object;
 
+export type NftMsgMintNFTResponse = object;
+
 /**
  * Params defines the parameters for the module.
  */

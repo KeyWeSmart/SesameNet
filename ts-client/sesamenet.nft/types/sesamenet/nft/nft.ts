@@ -21,10 +21,10 @@ export interface Denom {
   /** This was added because Cosmos SDK's native NFT module has uri as a parameter for class which is needed for nft transfers */
   uri: string;
   /** This field represent all device (nft) that can access to this doorlock (denom) */
-  accessList: { [key: string]: boolean };
+  accessMap: { [key: string]: boolean };
 }
 
-export interface Denom_AccessListEntry {
+export interface Denom_AccessMapEntry {
   key: string;
   value: boolean;
 }
@@ -133,7 +133,7 @@ export const BaseNFT = {
 };
 
 function createBaseDenom(): Denom {
-  return { id: "", name: "", schema: "", owner: "", uri: "", accessList: {} };
+  return { id: "", name: "", schema: "", owner: "", uri: "", accessMap: {} };
 }
 
 export const Denom = {
@@ -153,8 +153,8 @@ export const Denom = {
     if (message.uri !== "") {
       writer.uint32(42).string(message.uri);
     }
-    Object.entries(message.accessList).forEach(([key, value]) => {
-      Denom_AccessListEntry.encode({ key: key as any, value }, writer.uint32(50).fork()).ldelim();
+    Object.entries(message.accessMap).forEach(([key, value]) => {
+      Denom_AccessMapEntry.encode({ key: key as any, value }, writer.uint32(50).fork()).ldelim();
     });
     return writer;
   },
@@ -182,9 +182,9 @@ export const Denom = {
           message.uri = reader.string();
           break;
         case 6:
-          const entry6 = Denom_AccessListEntry.decode(reader, reader.uint32());
+          const entry6 = Denom_AccessMapEntry.decode(reader, reader.uint32());
           if (entry6.value !== undefined) {
-            message.accessList[entry6.key] = entry6.value;
+            message.accessMap[entry6.key] = entry6.value;
           }
           break;
         default:
@@ -202,8 +202,8 @@ export const Denom = {
       schema: isSet(object.schema) ? String(object.schema) : "",
       owner: isSet(object.owner) ? String(object.owner) : "",
       uri: isSet(object.uri) ? String(object.uri) : "",
-      accessList: isObject(object.accessList)
-        ? Object.entries(object.accessList).reduce<{ [key: string]: boolean }>((acc, [key, value]) => {
+      accessMap: isObject(object.accessMap)
+        ? Object.entries(object.accessMap).reduce<{ [key: string]: boolean }>((acc, [key, value]) => {
           acc[key] = Boolean(value);
           return acc;
         }, {})
@@ -218,10 +218,10 @@ export const Denom = {
     message.schema !== undefined && (obj.schema = message.schema);
     message.owner !== undefined && (obj.owner = message.owner);
     message.uri !== undefined && (obj.uri = message.uri);
-    obj.accessList = {};
-    if (message.accessList) {
-      Object.entries(message.accessList).forEach(([k, v]) => {
-        obj.accessList[k] = v;
+    obj.accessMap = {};
+    if (message.accessMap) {
+      Object.entries(message.accessMap).forEach(([k, v]) => {
+        obj.accessMap[k] = v;
       });
     }
     return obj;
@@ -234,7 +234,7 @@ export const Denom = {
     message.schema = object.schema ?? "";
     message.owner = object.owner ?? "";
     message.uri = object.uri ?? "";
-    message.accessList = Object.entries(object.accessList ?? {}).reduce<{ [key: string]: boolean }>(
+    message.accessMap = Object.entries(object.accessMap ?? {}).reduce<{ [key: string]: boolean }>(
       (acc, [key, value]) => {
         if (value !== undefined) {
           acc[key] = Boolean(value);
@@ -247,12 +247,12 @@ export const Denom = {
   },
 };
 
-function createBaseDenom_AccessListEntry(): Denom_AccessListEntry {
+function createBaseDenom_AccessMapEntry(): Denom_AccessMapEntry {
   return { key: "", value: false };
 }
 
-export const Denom_AccessListEntry = {
-  encode(message: Denom_AccessListEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+export const Denom_AccessMapEntry = {
+  encode(message: Denom_AccessMapEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
     if (message.key !== "") {
       writer.uint32(10).string(message.key);
     }
@@ -262,10 +262,10 @@ export const Denom_AccessListEntry = {
     return writer;
   },
 
-  decode(input: _m0.Reader | Uint8Array, length?: number): Denom_AccessListEntry {
+  decode(input: _m0.Reader | Uint8Array, length?: number): Denom_AccessMapEntry {
     const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
     let end = length === undefined ? reader.len : reader.pos + length;
-    const message = createBaseDenom_AccessListEntry();
+    const message = createBaseDenom_AccessMapEntry();
     while (reader.pos < end) {
       const tag = reader.uint32();
       switch (tag >>> 3) {
@@ -283,22 +283,22 @@ export const Denom_AccessListEntry = {
     return message;
   },
 
-  fromJSON(object: any): Denom_AccessListEntry {
+  fromJSON(object: any): Denom_AccessMapEntry {
     return {
       key: isSet(object.key) ? String(object.key) : "",
       value: isSet(object.value) ? Boolean(object.value) : false,
     };
   },
 
-  toJSON(message: Denom_AccessListEntry): unknown {
+  toJSON(message: Denom_AccessMapEntry): unknown {
     const obj: any = {};
     message.key !== undefined && (obj.key = message.key);
     message.value !== undefined && (obj.value = message.value);
     return obj;
   },
 
-  fromPartial<I extends Exact<DeepPartial<Denom_AccessListEntry>, I>>(object: I): Denom_AccessListEntry {
-    const message = createBaseDenom_AccessListEntry();
+  fromPartial<I extends Exact<DeepPartial<Denom_AccessMapEntry>, I>>(object: I): Denom_AccessMapEntry {
+    const message = createBaseDenom_AccessMapEntry();
     message.key = object.key ?? "";
     message.value = object.value ?? false;
     return message;

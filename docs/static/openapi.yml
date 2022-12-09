@@ -74273,6 +74273,8 @@ definitions:
       the connection handshake.
   sesamenet.nft.MsgIssueDenomResponse:
     type: object
+  sesamenet.nft.MsgMintNFTResponse:
+    type: object
   sesamenet.nft.Params:
     type: object
     description: Params defines the parameters for the module.
