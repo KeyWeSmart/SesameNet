@@ -7,10 +7,21 @@ import { msgTypes } from './registry';
 import { IgniteClient } from "../client"
 import { MissingWalletError } from "../helpers"
 import { Api } from "./rest";
+import { MsgIssueDenom } from "./types/sesamenet/nft/tx";
 
 
-export {  };
+export { MsgIssueDenom };
 
+type sendMsgIssueDenomParams = {
+  value: MsgIssueDenom,
+  fee?: StdFee,
+  memo?: string
+};
+
+
+type msgIssueDenomParams = {
+  value: MsgIssueDenom,
+};
 
 
 export const registry = new Registry(msgTypes);
@@ -30,6 +41,28 @@ export const txClient = ({ signer, prefix, addr }: TxClientOptions = { addr: "ht
 
   return {
 		
+		async sendMsgIssueDenom({ value, fee, memo }: sendMsgIssueDenomParams): Promise<DeliverTxResponse> {
+			if (!signer) {
+					throw new Error('TxClient:sendMsgIssueDenom: Unable to sign Tx. Signer is not present.')
+			}
+			try {			
+				const { address } = (await signer.getAccounts())[0]; 
+				const signingClient = await SigningStargateClient.connectWithSigner(addr,signer,{registry, prefix});
+				let msg = this.msgIssueDenom({ value: MsgIssueDenom.fromPartial(value) })
+				return await signingClient.signAndBroadcast(address, [msg], fee ? fee : defaultFee, memo)
+			} catch (e: any) {
+				throw new Error('TxClient:sendMsgIssueDenom: Could not broadcast Tx: '+ e.message)
+			}
+		},
+		
+		
+		msgIssueDenom({ value }: msgIssueDenomParams): EncodeObject {
+			try {
+				return { typeUrl: "/sesamenet.nft.MsgIssueDenom", value: MsgIssueDenom.fromPartial( value ) }  
+			} catch (e: any) {
+				throw new Error('TxClient:MsgIssueDenom: Could not create message: ' + e.message)
+			}
+		},
 		
 	}
 };

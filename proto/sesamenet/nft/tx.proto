@@ -2,12 +2,27 @@ syntax = "proto3";
 package sesamenet.nft;
 
 // this line is used by starport scaffolding # proto/tx/import
+import "gogoproto/gogo.proto";
 
 option go_package = "sesamenet/x/nft/types";
 
 // Msg defines the Msg service.
 service Msg {
-    // this line is used by starport scaffolding # proto/tx/rpc
+      rpc IssueDenom(MsgIssueDenom) returns (MsgIssueDenomResponse);
+// this line is used by starport scaffolding # proto/tx/rpc
+}
+
+message MsgIssueDenom {
+  option (gogoproto.equal) = true;
+
+  string id = 1;
+  string name = 2;
+  string schema = 3;
+  string sender = 4;
+  string uri = 5;
+}
+
+message MsgIssueDenomResponse {
 }
 
 // this line is used by starport scaffolding # proto/tx/message
