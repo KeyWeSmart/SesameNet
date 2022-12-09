@@ -27,6 +27,18 @@ export interface MsgMintNFT {
 export interface MsgMintNFTResponse {
 }
 
+export interface MsgEditNFT {
+  id: string;
+  denomId: string;
+  name: string;
+  uri: string;
+  data: string;
+  sender: string;
+}
+
+export interface MsgEditNFTResponse {
+}
+
 function createBaseMsgIssueDenom(): MsgIssueDenom {
   return { id: "", name: "", schema: "", sender: "", uri: "" };
 }
@@ -293,11 +305,145 @@ export const MsgMintNFTResponse = {
   },
 };
 
+function createBaseMsgEditNFT(): MsgEditNFT {
+  return { id: "", denomId: "", name: "", uri: "", data: "", sender: "" };
+}
+
+export const MsgEditNFT = {
+  encode(message: MsgEditNFT, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.id !== "") {
+      writer.uint32(10).string(message.id);
+    }
+    if (message.denomId !== "") {
+      writer.uint32(18).string(message.denomId);
+    }
+    if (message.name !== "") {
+      writer.uint32(26).string(message.name);
+    }
+    if (message.uri !== "") {
+      writer.uint32(34).string(message.uri);
+    }
+    if (message.data !== "") {
+      writer.uint32(42).string(message.data);
+    }
+    if (message.sender !== "") {
+      writer.uint32(50).string(message.sender);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgEditNFT {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgEditNFT();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = reader.string();
+          break;
+        case 2:
+          message.denomId = reader.string();
+          break;
+        case 3:
+          message.name = reader.string();
+          break;
+        case 4:
+          message.uri = reader.string();
+          break;
+        case 5:
+          message.data = reader.string();
+          break;
+        case 6:
+          message.sender = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): MsgEditNFT {
+    return {
+      id: isSet(object.id) ? String(object.id) : "",
+      denomId: isSet(object.denomId) ? String(object.denomId) : "",
+      name: isSet(object.name) ? String(object.name) : "",
+      uri: isSet(object.uri) ? String(object.uri) : "",
+      data: isSet(object.data) ? String(object.data) : "",
+      sender: isSet(object.sender) ? String(object.sender) : "",
+    };
+  },
+
+  toJSON(message: MsgEditNFT): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    message.denomId !== undefined && (obj.denomId = message.denomId);
+    message.name !== undefined && (obj.name = message.name);
+    message.uri !== undefined && (obj.uri = message.uri);
+    message.data !== undefined && (obj.data = message.data);
+    message.sender !== undefined && (obj.sender = message.sender);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<MsgEditNFT>, I>>(object: I): MsgEditNFT {
+    const message = createBaseMsgEditNFT();
+    message.id = object.id ?? "";
+    message.denomId = object.denomId ?? "";
+    message.name = object.name ?? "";
+    message.uri = object.uri ?? "";
+    message.data = object.data ?? "";
+    message.sender = object.sender ?? "";
+    return message;
+  },
+};
+
+function createBaseMsgEditNFTResponse(): MsgEditNFTResponse {
+  return {};
+}
+
+export const MsgEditNFTResponse = {
+  encode(_: MsgEditNFTResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): MsgEditNFTResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseMsgEditNFTResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(_: any): MsgEditNFTResponse {
+    return {};
+  },
+
+  toJSON(_: MsgEditNFTResponse): unknown {
+    const obj: any = {};
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<MsgEditNFTResponse>, I>>(_: I): MsgEditNFTResponse {
+    const message = createBaseMsgEditNFTResponse();
+    return message;
+  },
+};
+
 /** Msg defines the Msg service. */
 export interface Msg {
   IssueDenom(request: MsgIssueDenom): Promise<MsgIssueDenomResponse>;
-  /** this line is used by starport scaffolding # proto/tx/rpc */
   MintNFT(request: MsgMintNFT): Promise<MsgMintNFTResponse>;
+  /** this line is used by starport scaffolding # proto/tx/rpc */
+  EditNFT(request: MsgEditNFT): Promise<MsgEditNFTResponse>;
 }
 
 export class MsgClientImpl implements Msg {
@@ -306,6 +452,7 @@ export class MsgClientImpl implements Msg {
     this.rpc = rpc;
     this.IssueDenom = this.IssueDenom.bind(this);
     this.MintNFT = this.MintNFT.bind(this);
+    this.EditNFT = this.EditNFT.bind(this);
   }
   IssueDenom(request: MsgIssueDenom): Promise<MsgIssueDenomResponse> {
     const data = MsgIssueDenom.encode(request).finish();
@@ -317,6 +464,12 @@ export class MsgClientImpl implements Msg {
     const data = MsgMintNFT.encode(request).finish();
     const promise = this.rpc.request("sesamenet.nft.Msg", "MintNFT", data);
     return promise.then((data) => MsgMintNFTResponse.decode(new _m0.Reader(data)));
+  }
+
+  EditNFT(request: MsgEditNFT): Promise<MsgEditNFTResponse> {
+    const data = MsgEditNFT.encode(request).finish();
+    const promise = this.rpc.request("sesamenet.nft.Msg", "EditNFT", data);
+    return promise.then((data) => MsgEditNFTResponse.decode(new _m0.Reader(data)));
   }
 }
 
