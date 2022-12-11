@@ -12,6 +12,7 @@ service Msg {
   rpc MintNFT(MsgMintNFT) returns (MsgMintNFTResponse);
   rpc EditNFT(MsgEditNFT) returns (MsgEditNFTResponse);
   rpc TransferNFT(MsgTransferNFT) returns (MsgTransferNFTResponse);
+  rpc BurnNFT(MsgBurnNFT) returns (MsgBurnNFTResponse);
 // this line is used by starport scaffolding # proto/tx/rpc
 }
 
@@ -67,6 +68,17 @@ message MsgTransferNFT {
 }
 
 message MsgTransferNFTResponse {
+}
+
+message MsgBurnNFT {
+  option (gogoproto.equal) = true;
+
+  string id = 1;
+  string denom_id = 2 [(gogoproto.moretags) = "yaml:\"denom_id\""];
+  string sender = 3;
+}
+
+message MsgBurnNFTResponse {
 }
 
 // this line is used by starport scaffolding # proto/tx/message

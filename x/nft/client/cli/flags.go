@@ -22,6 +22,7 @@ var (
 	FsMintNFT     = flag.NewFlagSet("", flag.ContinueOnError)
 	FsEditNFT     = flag.NewFlagSet("", flag.ContinueOnError)
 	FsTransferNFT = flag.NewFlagSet("", flag.ContinueOnError)
+	FsBurnNFT     = flag.NewFlagSet("", flag.ContinueOnError)
 	FsQuerySupply = flag.NewFlagSet("", flag.ContinueOnError)
 	FsQueryOwner  = flag.NewFlagSet("", flag.ContinueOnError)
 )

@@ -9,6 +9,8 @@
  * ---------------------------------------------------------------
  */
 
+export type NftMsgBurnNFTResponse = object;
+
 export type NftMsgEditNFTResponse = object;
 
 export type NftMsgIssueDenomResponse = object;
