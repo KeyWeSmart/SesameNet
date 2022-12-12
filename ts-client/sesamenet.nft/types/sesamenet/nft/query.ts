@@ -1,6 +1,8 @@
 /* eslint-disable */
 import Long from "long";
 import _m0 from "protobufjs/minimal";
+import { PageRequest, PageResponse } from "../../cosmos/base/query/v1beta1/pagination";
+import { Owner } from "./nft";
 import { Params } from "./params";
 
 export const protobufPackage = "sesamenet.nft";
@@ -22,6 +24,17 @@ export interface QuerySupplyRequest {
 
 export interface QuerySupplyResponse {
   amount: number;
+}
+
+export interface QueryOwnerRequest {
+  denomId: string;
+  owner: string;
+  pagination: PageRequest | undefined;
+}
+
+export interface QueryOwnerResponse {
+  owner: Owner | undefined;
+  pagination: PageResponse | undefined;
 }
 
 function createBaseQueryParamsRequest(): QueryParamsRequest {
@@ -217,12 +230,145 @@ export const QuerySupplyResponse = {
   },
 };
 
+function createBaseQueryOwnerRequest(): QueryOwnerRequest {
+  return { denomId: "", owner: "", pagination: undefined };
+}
+
+export const QueryOwnerRequest = {
+  encode(message: QueryOwnerRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.denomId !== "") {
+      writer.uint32(10).string(message.denomId);
+    }
+    if (message.owner !== "") {
+      writer.uint32(18).string(message.owner);
+    }
+    if (message.pagination !== undefined) {
+      PageRequest.encode(message.pagination, writer.uint32(26).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryOwnerRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryOwnerRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.denomId = reader.string();
+          break;
+        case 2:
+          message.owner = reader.string();
+          break;
+        case 3:
+          message.pagination = PageRequest.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryOwnerRequest {
+    return {
+      denomId: isSet(object.denomId) ? String(object.denomId) : "",
+      owner: isSet(object.owner) ? String(object.owner) : "",
+      pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined,
+    };
+  },
+
+  toJSON(message: QueryOwnerRequest): unknown {
+    const obj: any = {};
+    message.denomId !== undefined && (obj.denomId = message.denomId);
+    message.owner !== undefined && (obj.owner = message.owner);
+    message.pagination !== undefined
+      && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryOwnerRequest>, I>>(object: I): QueryOwnerRequest {
+    const message = createBaseQueryOwnerRequest();
+    message.denomId = object.denomId ?? "";
+    message.owner = object.owner ?? "";
+    message.pagination = (object.pagination !== undefined && object.pagination !== null)
+      ? PageRequest.fromPartial(object.pagination)
+      : undefined;
+    return message;
+  },
+};
+
+function createBaseQueryOwnerResponse(): QueryOwnerResponse {
+  return { owner: undefined, pagination: undefined };
+}
+
+export const QueryOwnerResponse = {
+  encode(message: QueryOwnerResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.owner !== undefined) {
+      Owner.encode(message.owner, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.pagination !== undefined) {
+      PageResponse.encode(message.pagination, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryOwnerResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryOwnerResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.owner = Owner.decode(reader, reader.uint32());
+          break;
+        case 2:
+          message.pagination = PageResponse.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryOwnerResponse {
+    return {
+      owner: isSet(object.owner) ? Owner.fromJSON(object.owner) : undefined,
+      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
+    };
+  },
+
+  toJSON(message: QueryOwnerResponse): unknown {
+    const obj: any = {};
+    message.owner !== undefined && (obj.owner = message.owner ? Owner.toJSON(message.owner) : undefined);
+    message.pagination !== undefined
+      && (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryOwnerResponse>, I>>(object: I): QueryOwnerResponse {
+    const message = createBaseQueryOwnerResponse();
+    message.owner = (object.owner !== undefined && object.owner !== null) ? Owner.fromPartial(object.owner) : undefined;
+    message.pagination = (object.pagination !== undefined && object.pagination !== null)
+      ? PageResponse.fromPartial(object.pagination)
+      : undefined;
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse>;
   /** Queries a list of Supply items. */
   Supply(request: QuerySupplyRequest): Promise<QuerySupplyResponse>;
+  /** Queries a list of Owner items. */
+  Owner(request: QueryOwnerRequest): Promise<QueryOwnerResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -231,6 +377,7 @@ export class QueryClientImpl implements Query {
     this.rpc = rpc;
     this.Params = this.Params.bind(this);
     this.Supply = this.Supply.bind(this);
+    this.Owner = this.Owner.bind(this);
   }
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
@@ -242,6 +389,12 @@ export class QueryClientImpl implements Query {
     const data = QuerySupplyRequest.encode(request).finish();
     const promise = this.rpc.request("sesamenet.nft.Query", "Supply", data);
     return promise.then((data) => QuerySupplyResponse.decode(new _m0.Reader(data)));
+  }
+
+  Owner(request: QueryOwnerRequest): Promise<QueryOwnerResponse> {
+    const data = QueryOwnerRequest.encode(request).finish();
+    const promise = this.rpc.request("sesamenet.nft.Query", "Owner", data);
+    return promise.then((data) => QueryOwnerResponse.decode(new _m0.Reader(data)));
   }
 }
 

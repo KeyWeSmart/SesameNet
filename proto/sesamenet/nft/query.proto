@@ -5,6 +5,7 @@ import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
 import "cosmos/base/query/v1beta1/pagination.proto";
 import "sesamenet/nft/params.proto";
+import "sesamenet/nft/nft.proto";
 // this line is used by starport scaffolding # 1
 
 option go_package = "sesamenet/x/nft/types";
@@ -18,6 +19,11 @@ service Query {
   // Queries a list of Supply items.
 	rpc Supply(QuerySupplyRequest) returns (QuerySupplyResponse) {
 		option (google.api.http).get = "/sesamenet/nft/collections/{denom_id}/supply";
+	}
+
+// Queries a list of Owner items.
+	rpc Owner(QueryOwnerRequest) returns (QueryOwnerResponse) {
+		option (google.api.http).get = "/sesamenet/nft/nfts/{owner}";
 	}
 
 // this line is used by starport scaffolding # 2
@@ -39,6 +45,18 @@ message QuerySupplyRequest {
 
 message QuerySupplyResponse {
   uint64 amount = 1;
+}
+
+message QueryOwnerRequest {
+  string denom_id = 1 [(gogoproto.moretags) = "yaml:\"denom_id\""];
+  string owner = 2 [(gogoproto.moretags) = "yaml:\"owner\""];
+
+  cosmos.base.query.v1beta1.PageRequest pagination = 3;
+}
+
+message QueryOwnerResponse {
+  Owner owner = 1;
+  cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
 // this line is used by starport scaffolding # 3
