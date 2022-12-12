@@ -67,9 +67,9 @@ func (k Keeper) setNFT(ctx sdk.Context, denomID string, nft types.BaseNFT) {
 }
 
 // deleteNFT deletes an existing NFT from store
-func (k Keeper) deleteNFT(ctx sdk.Context, denomID string, nft exported.NFT) {
+func (k Keeper) deleteNFT(ctx sdk.Context, denomID, tokenID string) {
 	store := ctx.KVStore(k.storeKey)
-	store.Delete(types.KeyNFT(denomID, nft.GetID()))
+	store.Delete(types.KeyNFT(denomID, tokenID))
 }
 
 // MintNFT mints an NFT and manages the NFT's existence within Collections and Owners
@@ -166,7 +166,7 @@ func (k Keeper) BurnNFT(ctx sdk.Context, denomID, tokenID string, owner sdk.AccA
 		return sdkerrors.Wrapf(types.ErrInvalidDenom, "denom ID %s not exists", denomID)
 	}
 
-	nft, err, isNFTOwner := k.IsOwner(ctx, denomID, tokenID, owner)
+	_, err, isNFTOwner := k.IsOwner(ctx, denomID, tokenID, owner)
 	if err != nil {
 		return err
 	}
@@ -180,7 +180,7 @@ func (k Keeper) BurnNFT(ctx sdk.Context, denomID, tokenID string, owner sdk.AccA
 		return sdkerrors.Wrapf(types.ErrUnauthorized, "%s is either nft or denom owner", owner)
 	}
 
-	k.deleteNFT(ctx, denomID, nft)
+	k.deleteNFT(ctx, denomID, tokenID)
 	k.deleteOwner(ctx, denomID, tokenID, owner)
 	k.decreaseSupply(ctx, denomID)
 	err = k.RemoveAccessMap(ctx, denomID, tokenID)

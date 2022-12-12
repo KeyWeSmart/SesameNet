@@ -30,12 +30,8 @@ var (
 	PrefixDenom      = []byte{0x04} // key for denom of the nft
 	PrefixDenomName  = []byte{0x05} // key for denom name of the nft
 
-	delimiter = []byte("/")
+	delimiter = []byte("|")
 )
-
-func KeyPrefix(p string) []byte {
-	return []byte(p)
-}
 
 // SplitKeyOwner return the address,denom,id from the key of stored owner
 func SplitKeyOwner(key []byte) (address sdk.AccAddress, denomID, tokenID string, err error) {
