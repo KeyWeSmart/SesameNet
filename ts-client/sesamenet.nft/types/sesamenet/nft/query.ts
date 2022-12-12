@@ -2,7 +2,7 @@
 import Long from "long";
 import _m0 from "protobufjs/minimal";
 import { PageRequest, PageResponse } from "../../cosmos/base/query/v1beta1/pagination";
-import { Owner, QueryCollection } from "./nft";
+import { Owner, QueryCollection, QueryDenom } from "./nft";
 import { Params } from "./params";
 
 export const protobufPackage = "sesamenet.nft";
@@ -45,6 +45,14 @@ export interface QueryCollectionRequest {
 export interface QueryCollectionResponse {
   collection: QueryCollection | undefined;
   pagination: PageResponse | undefined;
+}
+
+export interface QueryDenomRequest {
+  denomId: string;
+}
+
+export interface QueryDenomResponse {
+  denom: QueryDenom | undefined;
 }
 
 function createBaseQueryParamsRequest(): QueryParamsRequest {
@@ -496,6 +504,102 @@ export const QueryCollectionResponse = {
   },
 };
 
+function createBaseQueryDenomRequest(): QueryDenomRequest {
+  return { denomId: "" };
+}
+
+export const QueryDenomRequest = {
+  encode(message: QueryDenomRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.denomId !== "") {
+      writer.uint32(10).string(message.denomId);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryDenomRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryDenomRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.denomId = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryDenomRequest {
+    return { denomId: isSet(object.denomId) ? String(object.denomId) : "" };
+  },
+
+  toJSON(message: QueryDenomRequest): unknown {
+    const obj: any = {};
+    message.denomId !== undefined && (obj.denomId = message.denomId);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryDenomRequest>, I>>(object: I): QueryDenomRequest {
+    const message = createBaseQueryDenomRequest();
+    message.denomId = object.denomId ?? "";
+    return message;
+  },
+};
+
+function createBaseQueryDenomResponse(): QueryDenomResponse {
+  return { denom: undefined };
+}
+
+export const QueryDenomResponse = {
+  encode(message: QueryDenomResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.denom !== undefined) {
+      QueryDenom.encode(message.denom, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryDenomResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryDenomResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.denom = QueryDenom.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryDenomResponse {
+    return { denom: isSet(object.denom) ? QueryDenom.fromJSON(object.denom) : undefined };
+  },
+
+  toJSON(message: QueryDenomResponse): unknown {
+    const obj: any = {};
+    message.denom !== undefined && (obj.denom = message.denom ? QueryDenom.toJSON(message.denom) : undefined);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryDenomResponse>, I>>(object: I): QueryDenomResponse {
+    const message = createBaseQueryDenomResponse();
+    message.denom = (object.denom !== undefined && object.denom !== null)
+      ? QueryDenom.fromPartial(object.denom)
+      : undefined;
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -506,6 +610,8 @@ export interface Query {
   Owner(request: QueryOwnerRequest): Promise<QueryOwnerResponse>;
   /** Queries a list of Collection items. */
   Collection(request: QueryCollectionRequest): Promise<QueryCollectionResponse>;
+  /** Queries a list of Denom items. */
+  Denom(request: QueryDenomRequest): Promise<QueryDenomResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -516,6 +622,7 @@ export class QueryClientImpl implements Query {
     this.Supply = this.Supply.bind(this);
     this.Owner = this.Owner.bind(this);
     this.Collection = this.Collection.bind(this);
+    this.Denom = this.Denom.bind(this);
   }
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
@@ -539,6 +646,12 @@ export class QueryClientImpl implements Query {
     const data = QueryCollectionRequest.encode(request).finish();
     const promise = this.rpc.request("sesamenet.nft.Query", "Collection", data);
     return promise.then((data) => QueryCollectionResponse.decode(new _m0.Reader(data)));
+  }
+
+  Denom(request: QueryDenomRequest): Promise<QueryDenomResponse> {
+    const data = QueryDenomRequest.encode(request).finish();
+    const promise = this.rpc.request("sesamenet.nft.Query", "Denom", data);
+    return promise.then((data) => QueryDenomResponse.decode(new _m0.Reader(data)));
   }
 }
 

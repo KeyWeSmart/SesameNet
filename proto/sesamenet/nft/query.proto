@@ -31,6 +31,11 @@ service Query {
 		option (google.api.http).get = "/sesamenet/nft/collections/{denom_id}";
 	}
 
+// Queries a list of Denom items.
+	rpc Denom(QueryDenomRequest) returns (QueryDenomResponse) {
+		option (google.api.http).get = "/sesamenet/nft/denoms/{denom_id}";
+	}
+
 // this line is used by starport scaffolding # 2
 }
 
@@ -72,6 +77,14 @@ message QueryCollectionRequest {
 message QueryCollectionResponse {
   QueryCollection collection = 1;
   cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryDenomRequest {
+  string denom_id = 1 [(gogoproto.moretags) = "yaml:\"denom_id\""];
+}
+
+message QueryDenomResponse {
+  QueryDenom denom = 1;
 }
 
 // this line is used by starport scaffolding # 3
