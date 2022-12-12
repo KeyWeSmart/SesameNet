@@ -2,7 +2,7 @@
 import Long from "long";
 import _m0 from "protobufjs/minimal";
 import { PageRequest, PageResponse } from "../../cosmos/base/query/v1beta1/pagination";
-import { Owner } from "./nft";
+import { Owner, QueryCollection } from "./nft";
 import { Params } from "./params";
 
 export const protobufPackage = "sesamenet.nft";
@@ -34,6 +34,16 @@ export interface QueryOwnerRequest {
 
 export interface QueryOwnerResponse {
   owner: Owner | undefined;
+  pagination: PageResponse | undefined;
+}
+
+export interface QueryCollectionRequest {
+  denomId: string;
+  pagination: PageRequest | undefined;
+}
+
+export interface QueryCollectionResponse {
+  collection: QueryCollection | undefined;
   pagination: PageResponse | undefined;
 }
 
@@ -361,6 +371,131 @@ export const QueryOwnerResponse = {
   },
 };
 
+function createBaseQueryCollectionRequest(): QueryCollectionRequest {
+  return { denomId: "", pagination: undefined };
+}
+
+export const QueryCollectionRequest = {
+  encode(message: QueryCollectionRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.denomId !== "") {
+      writer.uint32(10).string(message.denomId);
+    }
+    if (message.pagination !== undefined) {
+      PageRequest.encode(message.pagination, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryCollectionRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryCollectionRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.denomId = reader.string();
+          break;
+        case 2:
+          message.pagination = PageRequest.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryCollectionRequest {
+    return {
+      denomId: isSet(object.denomId) ? String(object.denomId) : "",
+      pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined,
+    };
+  },
+
+  toJSON(message: QueryCollectionRequest): unknown {
+    const obj: any = {};
+    message.denomId !== undefined && (obj.denomId = message.denomId);
+    message.pagination !== undefined
+      && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryCollectionRequest>, I>>(object: I): QueryCollectionRequest {
+    const message = createBaseQueryCollectionRequest();
+    message.denomId = object.denomId ?? "";
+    message.pagination = (object.pagination !== undefined && object.pagination !== null)
+      ? PageRequest.fromPartial(object.pagination)
+      : undefined;
+    return message;
+  },
+};
+
+function createBaseQueryCollectionResponse(): QueryCollectionResponse {
+  return { collection: undefined, pagination: undefined };
+}
+
+export const QueryCollectionResponse = {
+  encode(message: QueryCollectionResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.collection !== undefined) {
+      QueryCollection.encode(message.collection, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.pagination !== undefined) {
+      PageResponse.encode(message.pagination, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryCollectionResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryCollectionResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.collection = QueryCollection.decode(reader, reader.uint32());
+          break;
+        case 2:
+          message.pagination = PageResponse.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryCollectionResponse {
+    return {
+      collection: isSet(object.collection) ? QueryCollection.fromJSON(object.collection) : undefined,
+      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
+    };
+  },
+
+  toJSON(message: QueryCollectionResponse): unknown {
+    const obj: any = {};
+    message.collection !== undefined
+      && (obj.collection = message.collection ? QueryCollection.toJSON(message.collection) : undefined);
+    message.pagination !== undefined
+      && (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryCollectionResponse>, I>>(object: I): QueryCollectionResponse {
+    const message = createBaseQueryCollectionResponse();
+    message.collection = (object.collection !== undefined && object.collection !== null)
+      ? QueryCollection.fromPartial(object.collection)
+      : undefined;
+    message.pagination = (object.pagination !== undefined && object.pagination !== null)
+      ? PageResponse.fromPartial(object.pagination)
+      : undefined;
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -369,6 +504,8 @@ export interface Query {
   Supply(request: QuerySupplyRequest): Promise<QuerySupplyResponse>;
   /** Queries a list of Owner items. */
   Owner(request: QueryOwnerRequest): Promise<QueryOwnerResponse>;
+  /** Queries a list of Collection items. */
+  Collection(request: QueryCollectionRequest): Promise<QueryCollectionResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -378,6 +515,7 @@ export class QueryClientImpl implements Query {
     this.Params = this.Params.bind(this);
     this.Supply = this.Supply.bind(this);
     this.Owner = this.Owner.bind(this);
+    this.Collection = this.Collection.bind(this);
   }
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
@@ -395,6 +533,12 @@ export class QueryClientImpl implements Query {
     const data = QueryOwnerRequest.encode(request).finish();
     const promise = this.rpc.request("sesamenet.nft.Query", "Owner", data);
     return promise.then((data) => QueryOwnerResponse.decode(new _m0.Reader(data)));
+  }
+
+  Collection(request: QueryCollectionRequest): Promise<QueryCollectionResponse> {
+    const data = QueryCollectionRequest.encode(request).finish();
+    const promise = this.rpc.request("sesamenet.nft.Query", "Collection", data);
+    return promise.then((data) => QueryCollectionResponse.decode(new _m0.Reader(data)));
   }
 }
 

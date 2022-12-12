@@ -15,3 +15,13 @@ func NewDenom(id, name, schema string, uri string, owner sdk.AccAddress, accessM
 		AccessMap: accessMap,
 	}
 }
+
+func ConvertDenomToQueryDenom(denom Denom) QueryDenom {
+	return QueryDenom{
+		Id:     denom.Id,
+		Name:   denom.Name,
+		Schema: denom.Schema,
+		Owner:  denom.Owner,
+		Uri:    denom.Uri,
+	}
+}

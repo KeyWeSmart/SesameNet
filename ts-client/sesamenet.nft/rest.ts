@@ -9,6 +9,14 @@
  * ---------------------------------------------------------------
  */
 
+export interface NftBaseNFT {
+  id?: string;
+  name?: string;
+  uri?: string;
+  data?: string;
+  owner?: string;
+}
+
 export interface NftIDCollection {
   denom_id?: string;
   token_ids?: string[];
@@ -33,6 +41,36 @@ export interface NftOwner {
  * Params defines the parameters for the module.
  */
 export type NftParams = object;
+
+export interface NftQueryCollection {
+  denom?: NftQueryDenom;
+  nfts?: NftBaseNFT[];
+}
+
+export interface NftQueryCollectionResponse {
+  collection?: NftQueryCollection;
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
+}
+
+export interface NftQueryDenom {
+  id?: string;
+  name?: string;
+  schema?: string;
+  owner?: string;
+
+  /** This was added because Cosmos SDK's native NFT module has uri as a parameter for class which is needed for nft transfers */
+  uri?: string;
+}
 
 export interface NftQueryOwnerResponse {
   owner?: NftOwner;
@@ -270,6 +308,33 @@ export class HttpClient<SecurityDataType = unknown> {
  * @version version not set
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryCollection
+   * @summary Queries a list of Collection items.
+   * @request GET:/sesamenet/nft/collections/{denom_id}
+   */
+  queryCollection = (
+    denomId: string,
+    query?: {
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<NftQueryCollectionResponse, RpcStatus>({
+      path: `/sesamenet/nft/collections/${denomId}`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
   /**
    * No description
    *

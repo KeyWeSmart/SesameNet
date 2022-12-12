@@ -29,6 +29,15 @@ export interface Denom_AccessMapEntry {
   value: boolean;
 }
 
+export interface QueryDenom {
+  id: string;
+  name: string;
+  schema: string;
+  owner: string;
+  /** This was added because Cosmos SDK's native NFT module has uri as a parameter for class which is needed for nft transfers */
+  uri: string;
+}
+
 /** IDCollection defines a type of collection with specified ID */
 export interface IDCollection {
   denomId: string;
@@ -44,6 +53,11 @@ export interface Owner {
 /** Collection defines a type of collection */
 export interface Collection {
   denom: Denom | undefined;
+  nfts: BaseNFT[];
+}
+
+export interface QueryCollection {
+  denom: QueryDenom | undefined;
   nfts: BaseNFT[];
 }
 
@@ -305,6 +319,91 @@ export const Denom_AccessMapEntry = {
   },
 };
 
+function createBaseQueryDenom(): QueryDenom {
+  return { id: "", name: "", schema: "", owner: "", uri: "" };
+}
+
+export const QueryDenom = {
+  encode(message: QueryDenom, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.id !== "") {
+      writer.uint32(10).string(message.id);
+    }
+    if (message.name !== "") {
+      writer.uint32(18).string(message.name);
+    }
+    if (message.schema !== "") {
+      writer.uint32(26).string(message.schema);
+    }
+    if (message.owner !== "") {
+      writer.uint32(34).string(message.owner);
+    }
+    if (message.uri !== "") {
+      writer.uint32(42).string(message.uri);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryDenom {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryDenom();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.id = reader.string();
+          break;
+        case 2:
+          message.name = reader.string();
+          break;
+        case 3:
+          message.schema = reader.string();
+          break;
+        case 4:
+          message.owner = reader.string();
+          break;
+        case 5:
+          message.uri = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryDenom {
+    return {
+      id: isSet(object.id) ? String(object.id) : "",
+      name: isSet(object.name) ? String(object.name) : "",
+      schema: isSet(object.schema) ? String(object.schema) : "",
+      owner: isSet(object.owner) ? String(object.owner) : "",
+      uri: isSet(object.uri) ? String(object.uri) : "",
+    };
+  },
+
+  toJSON(message: QueryDenom): unknown {
+    const obj: any = {};
+    message.id !== undefined && (obj.id = message.id);
+    message.name !== undefined && (obj.name = message.name);
+    message.schema !== undefined && (obj.schema = message.schema);
+    message.owner !== undefined && (obj.owner = message.owner);
+    message.uri !== undefined && (obj.uri = message.uri);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryDenom>, I>>(object: I): QueryDenom {
+    const message = createBaseQueryDenom();
+    message.id = object.id ?? "";
+    message.name = object.name ?? "";
+    message.schema = object.schema ?? "";
+    message.owner = object.owner ?? "";
+    message.uri = object.uri ?? "";
+    return message;
+  },
+};
+
 function createBaseIDCollection(): IDCollection {
   return { denomId: "", tokenIds: [] };
 }
@@ -488,6 +587,70 @@ export const Collection = {
   fromPartial<I extends Exact<DeepPartial<Collection>, I>>(object: I): Collection {
     const message = createBaseCollection();
     message.denom = (object.denom !== undefined && object.denom !== null) ? Denom.fromPartial(object.denom) : undefined;
+    message.nfts = object.nfts?.map((e) => BaseNFT.fromPartial(e)) || [];
+    return message;
+  },
+};
+
+function createBaseQueryCollection(): QueryCollection {
+  return { denom: undefined, nfts: [] };
+}
+
+export const QueryCollection = {
+  encode(message: QueryCollection, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.denom !== undefined) {
+      QueryDenom.encode(message.denom, writer.uint32(10).fork()).ldelim();
+    }
+    for (const v of message.nfts) {
+      BaseNFT.encode(v!, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryCollection {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryCollection();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.denom = QueryDenom.decode(reader, reader.uint32());
+          break;
+        case 2:
+          message.nfts.push(BaseNFT.decode(reader, reader.uint32()));
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryCollection {
+    return {
+      denom: isSet(object.denom) ? QueryDenom.fromJSON(object.denom) : undefined,
+      nfts: Array.isArray(object?.nfts) ? object.nfts.map((e: any) => BaseNFT.fromJSON(e)) : [],
+    };
+  },
+
+  toJSON(message: QueryCollection): unknown {
+    const obj: any = {};
+    message.denom !== undefined && (obj.denom = message.denom ? QueryDenom.toJSON(message.denom) : undefined);
+    if (message.nfts) {
+      obj.nfts = message.nfts.map((e) => e ? BaseNFT.toJSON(e) : undefined);
+    } else {
+      obj.nfts = [];
+    }
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryCollection>, I>>(object: I): QueryCollection {
+    const message = createBaseQueryCollection();
+    message.denom = (object.denom !== undefined && object.denom !== null)
+      ? QueryDenom.fromPartial(object.denom)
+      : undefined;
     message.nfts = object.nfts?.map((e) => BaseNFT.fromPartial(e)) || [];
     return message;
   },

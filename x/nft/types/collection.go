@@ -13,6 +13,20 @@ func NewCollection(denom Denom, nfts []exported.NFT) (c Collection) {
 	return c
 }
 
+// NewCollection creates a new NFT Collection
+func NewQueryCollection(denom QueryDenom, nfts []exported.NFT) (c QueryCollection) {
+	c.Denom = denom
+	for _, nft := range nfts {
+		c = c.AddNFT(nft.(BaseNFT))
+	}
+	return c
+}
+
+func (c QueryCollection) AddNFT(nft BaseNFT) QueryCollection {
+	c.NFTs = append(c.NFTs, nft)
+	return c
+}
+
 // AddNFT adds an NFT to the collection
 func (c Collection) AddNFT(nft BaseNFT) Collection {
 	c.NFTs = append(c.NFTs, nft)

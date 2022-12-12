@@ -33,6 +33,18 @@ message Denom {
   map<string, bool> access_map = 6;
 }
 
+message QueryDenom {
+  option (gogoproto.equal) = true;
+
+  string id      = 1;
+  string name    = 2;
+  string schema  = 3;
+  string owner = 4;
+
+  // This was added because Cosmos SDK's native NFT module has uri as a parameter for class which is needed for nft transfers
+  string uri     = 5;
+}
+
 // IDCollection defines a type of collection with specified ID
 message IDCollection {
   option (gogoproto.equal) = true;
@@ -55,5 +67,12 @@ message Collection {
   option (gogoproto.equal) = true;
 
   Denom            denom = 1 [(gogoproto.nullable) = false];
+  repeated BaseNFT nfts  = 2 [(gogoproto.customname) = "NFTs", (gogoproto.nullable) = false];
+}
+
+message QueryCollection {
+  option (gogoproto.equal) = true;
+
+  QueryDenom       denom = 1 [(gogoproto.nullable) = false];
   repeated BaseNFT nfts  = 2 [(gogoproto.customname) = "NFTs", (gogoproto.nullable) = false];
 }
