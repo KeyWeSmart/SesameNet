@@ -24,22 +24,50 @@ func GetQueryCmd(queryRoute string) *cobra.Command {
 		RunE:                       client.ValidateCmd,
 	}
 
-	cmd.AddCommand(CmdQueryParams())
-	cmd.AddCommand(CmdSupply())
-
-	cmd.AddCommand(CmdOwner())
-
-	cmd.AddCommand(CmdCollection())
-
-	cmd.AddCommand(CmdDenom())
-
-	cmd.AddCommand(CmdDenomByName())
-
-	cmd.AddCommand(CmdDenoms())
-
-	cmd.AddCommand(CmdNFT())
+	cmd.AddCommand(
+		CmdQueryParams(),
+		CmdSupply(),
+		CmdCollection(),
+		GetDenomQueryCmd(),
+		GetTokenQueryCmd(),
+	)
 
 	// this line is used by starport scaffolding # 1
+
+	return cmd
+}
+
+func GetDenomQueryCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:                        "denom",
+		Short:                      "All subcommands for denominations querying of NFT module",
+		DisableFlagParsing:         true,
+		SuggestionsMinimumDistance: 2,
+		RunE:                       client.ValidateCmd,
+	}
+
+	cmd.AddCommand(
+		CmdDenom(),
+		CmdDenomByName(),
+		CmdDenoms(),
+	)
+
+	return cmd
+}
+
+func GetTokenQueryCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:                        "token",
+		Short:                      "All subcommands for tokens querying of NFT module",
+		DisableFlagParsing:         true,
+		SuggestionsMinimumDistance: 2,
+		RunE:                       client.ValidateCmd,
+	}
+
+	cmd.AddCommand(
+		CmdOwner(),
+		CmdNFT(),
+	)
 
 	return cmd
 }

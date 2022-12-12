@@ -10,7 +10,6 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/tx"
-	"github.com/cosmos/cosmos-sdk/version"
 	"github.com/spf13/cobra"
 )
 
@@ -21,14 +20,12 @@ func CmdIssueDenom() *cobra.Command {
 		Use:   "issue [denom-id]",
 		Short: "Issue new NFT denomination",
 		Example: fmt.Sprintf(
-			"$ %s tx nft issue <denom-id> "+
-				"--from=<key-name> "+
+			"$ %s tx nft denom issue <denom-id> "+
 				"--name=<denom-name> "+
 				"--schema=<schema-content or path to schema.json> "+
 				"--uri=<uri of denom> "+
-				"--chain-id=<chain-id> "+
-				"--fees=<fee>",
-			version.Name,
+				"--from=<key-name>",
+			types.BinaryName,
 		),
 		Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {

@@ -15,9 +15,9 @@ var _ = strconv.Itoa(0)
 
 func CmdNFT() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:     "token [denom-id] [token-id]",
-		Long:    "Query a single NFT from a collection.",
-		Example: fmt.Sprintf("$ %s query nft token <denom-id> <token-id>", types.BinaryName),
+		Use:     "id [denom-id] [token-id]",
+		Short:   "Query a single NFT by token ID from a collection.",
+		Example: fmt.Sprintf("$ %s query nft token id <denom-id> <token-id>", types.BinaryName),
 		Args:    cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			clientCtx, err := client.GetClientQueryContext(cmd)

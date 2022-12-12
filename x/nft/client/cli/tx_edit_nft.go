@@ -9,7 +9,6 @@ import (
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/tx"
-	"github.com/cosmos/cosmos-sdk/version"
 	"github.com/spf13/cobra"
 )
 
@@ -20,12 +19,12 @@ func CmdEditNFT() *cobra.Command {
 		Use:   "edit [denom-id] [token-id]",
 		Short: "Edit information of an existed NFT",
 		Example: fmt.Sprintf(
-			"$ %s tx nft edit <denom-id> <token-id> "+
+			"$ %s tx nft token edit <denom-id> <token-id> "+
 				"--uri=<uri> "+
-				"--from=<key-name> "+
-				"--chain-id=<chain-id> "+
-				"--fees=<fee>",
-			version.Name,
+				"--name=<token-name> "+
+				"--data=<token-metadata> "+
+				"--from=<key-name>",
+			types.BinaryName,
 		),
 		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
