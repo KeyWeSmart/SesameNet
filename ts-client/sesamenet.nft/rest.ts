@@ -72,6 +72,10 @@ export interface NftQueryDenom {
   uri?: string;
 }
 
+export interface NftQueryDenomByNameResponse {
+  denom?: NftQueryDenom;
+}
+
 export interface NftQueryDenomResponse {
   denom?: NftQueryDenom;
 }
@@ -367,6 +371,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   queryDenom = (denomId: string, params: RequestParams = {}) =>
     this.request<NftQueryDenomResponse, RpcStatus>({
       path: `/sesamenet/nft/denoms/${denomId}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryDenomByName
+   * @summary Queries a list of DenomByName items.
+   * @request GET:/sesamenet/nft/denoms/{denom_name}
+   */
+  queryDenomByName = (denomName: string, params: RequestParams = {}) =>
+    this.request<NftQueryDenomByNameResponse, RpcStatus>({
+      path: `/sesamenet/nft/denoms/${denomName}`,
       method: "GET",
       format: "json",
       ...params,

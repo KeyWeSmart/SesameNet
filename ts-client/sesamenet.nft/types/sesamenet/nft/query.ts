@@ -55,6 +55,14 @@ export interface QueryDenomResponse {
   denom: QueryDenom | undefined;
 }
 
+export interface QueryDenomByNameRequest {
+  denomName: string;
+}
+
+export interface QueryDenomByNameResponse {
+  denom: QueryDenom | undefined;
+}
+
 function createBaseQueryParamsRequest(): QueryParamsRequest {
   return {};
 }
@@ -600,6 +608,102 @@ export const QueryDenomResponse = {
   },
 };
 
+function createBaseQueryDenomByNameRequest(): QueryDenomByNameRequest {
+  return { denomName: "" };
+}
+
+export const QueryDenomByNameRequest = {
+  encode(message: QueryDenomByNameRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.denomName !== "") {
+      writer.uint32(10).string(message.denomName);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryDenomByNameRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryDenomByNameRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.denomName = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryDenomByNameRequest {
+    return { denomName: isSet(object.denomName) ? String(object.denomName) : "" };
+  },
+
+  toJSON(message: QueryDenomByNameRequest): unknown {
+    const obj: any = {};
+    message.denomName !== undefined && (obj.denomName = message.denomName);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryDenomByNameRequest>, I>>(object: I): QueryDenomByNameRequest {
+    const message = createBaseQueryDenomByNameRequest();
+    message.denomName = object.denomName ?? "";
+    return message;
+  },
+};
+
+function createBaseQueryDenomByNameResponse(): QueryDenomByNameResponse {
+  return { denom: undefined };
+}
+
+export const QueryDenomByNameResponse = {
+  encode(message: QueryDenomByNameResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.denom !== undefined) {
+      QueryDenom.encode(message.denom, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryDenomByNameResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryDenomByNameResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.denom = QueryDenom.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryDenomByNameResponse {
+    return { denom: isSet(object.denom) ? QueryDenom.fromJSON(object.denom) : undefined };
+  },
+
+  toJSON(message: QueryDenomByNameResponse): unknown {
+    const obj: any = {};
+    message.denom !== undefined && (obj.denom = message.denom ? QueryDenom.toJSON(message.denom) : undefined);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryDenomByNameResponse>, I>>(object: I): QueryDenomByNameResponse {
+    const message = createBaseQueryDenomByNameResponse();
+    message.denom = (object.denom !== undefined && object.denom !== null)
+      ? QueryDenom.fromPartial(object.denom)
+      : undefined;
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -612,6 +716,8 @@ export interface Query {
   Collection(request: QueryCollectionRequest): Promise<QueryCollectionResponse>;
   /** Queries a list of Denom items. */
   Denom(request: QueryDenomRequest): Promise<QueryDenomResponse>;
+  /** Queries a list of DenomByName items. */
+  DenomByName(request: QueryDenomByNameRequest): Promise<QueryDenomByNameResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -623,6 +729,7 @@ export class QueryClientImpl implements Query {
     this.Owner = this.Owner.bind(this);
     this.Collection = this.Collection.bind(this);
     this.Denom = this.Denom.bind(this);
+    this.DenomByName = this.DenomByName.bind(this);
   }
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
@@ -652,6 +759,12 @@ export class QueryClientImpl implements Query {
     const data = QueryDenomRequest.encode(request).finish();
     const promise = this.rpc.request("sesamenet.nft.Query", "Denom", data);
     return promise.then((data) => QueryDenomResponse.decode(new _m0.Reader(data)));
+  }
+
+  DenomByName(request: QueryDenomByNameRequest): Promise<QueryDenomByNameResponse> {
+    const data = QueryDenomByNameRequest.encode(request).finish();
+    const promise = this.rpc.request("sesamenet.nft.Query", "DenomByName", data);
+    return promise.then((data) => QueryDenomByNameResponse.decode(new _m0.Reader(data)));
   }
 }
 
