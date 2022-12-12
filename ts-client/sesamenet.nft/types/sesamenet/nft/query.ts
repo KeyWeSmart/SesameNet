@@ -63,6 +63,15 @@ export interface QueryDenomByNameResponse {
   denom: QueryDenom | undefined;
 }
 
+export interface QueryDenomsRequest {
+  pagination: PageRequest | undefined;
+}
+
+export interface QueryDenomsResponse {
+  denoms: QueryDenom[];
+  pagination: PageResponse | undefined;
+}
+
 function createBaseQueryParamsRequest(): QueryParamsRequest {
   return {};
 }
@@ -704,6 +713,121 @@ export const QueryDenomByNameResponse = {
   },
 };
 
+function createBaseQueryDenomsRequest(): QueryDenomsRequest {
+  return { pagination: undefined };
+}
+
+export const QueryDenomsRequest = {
+  encode(message: QueryDenomsRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.pagination !== undefined) {
+      PageRequest.encode(message.pagination, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryDenomsRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryDenomsRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.pagination = PageRequest.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryDenomsRequest {
+    return { pagination: isSet(object.pagination) ? PageRequest.fromJSON(object.pagination) : undefined };
+  },
+
+  toJSON(message: QueryDenomsRequest): unknown {
+    const obj: any = {};
+    message.pagination !== undefined
+      && (obj.pagination = message.pagination ? PageRequest.toJSON(message.pagination) : undefined);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryDenomsRequest>, I>>(object: I): QueryDenomsRequest {
+    const message = createBaseQueryDenomsRequest();
+    message.pagination = (object.pagination !== undefined && object.pagination !== null)
+      ? PageRequest.fromPartial(object.pagination)
+      : undefined;
+    return message;
+  },
+};
+
+function createBaseQueryDenomsResponse(): QueryDenomsResponse {
+  return { denoms: [], pagination: undefined };
+}
+
+export const QueryDenomsResponse = {
+  encode(message: QueryDenomsResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    for (const v of message.denoms) {
+      QueryDenom.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    if (message.pagination !== undefined) {
+      PageResponse.encode(message.pagination, writer.uint32(18).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryDenomsResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryDenomsResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.denoms.push(QueryDenom.decode(reader, reader.uint32()));
+          break;
+        case 2:
+          message.pagination = PageResponse.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryDenomsResponse {
+    return {
+      denoms: Array.isArray(object?.denoms) ? object.denoms.map((e: any) => QueryDenom.fromJSON(e)) : [],
+      pagination: isSet(object.pagination) ? PageResponse.fromJSON(object.pagination) : undefined,
+    };
+  },
+
+  toJSON(message: QueryDenomsResponse): unknown {
+    const obj: any = {};
+    if (message.denoms) {
+      obj.denoms = message.denoms.map((e) => e ? QueryDenom.toJSON(e) : undefined);
+    } else {
+      obj.denoms = [];
+    }
+    message.pagination !== undefined
+      && (obj.pagination = message.pagination ? PageResponse.toJSON(message.pagination) : undefined);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryDenomsResponse>, I>>(object: I): QueryDenomsResponse {
+    const message = createBaseQueryDenomsResponse();
+    message.denoms = object.denoms?.map((e) => QueryDenom.fromPartial(e)) || [];
+    message.pagination = (object.pagination !== undefined && object.pagination !== null)
+      ? PageResponse.fromPartial(object.pagination)
+      : undefined;
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -718,6 +842,8 @@ export interface Query {
   Denom(request: QueryDenomRequest): Promise<QueryDenomResponse>;
   /** Queries a list of DenomByName items. */
   DenomByName(request: QueryDenomByNameRequest): Promise<QueryDenomByNameResponse>;
+  /** Queries a list of Denoms items. */
+  Denoms(request: QueryDenomsRequest): Promise<QueryDenomsResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -730,6 +856,7 @@ export class QueryClientImpl implements Query {
     this.Collection = this.Collection.bind(this);
     this.Denom = this.Denom.bind(this);
     this.DenomByName = this.DenomByName.bind(this);
+    this.Denoms = this.Denoms.bind(this);
   }
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
@@ -765,6 +892,12 @@ export class QueryClientImpl implements Query {
     const data = QueryDenomByNameRequest.encode(request).finish();
     const promise = this.rpc.request("sesamenet.nft.Query", "DenomByName", data);
     return promise.then((data) => QueryDenomByNameResponse.decode(new _m0.Reader(data)));
+  }
+
+  Denoms(request: QueryDenomsRequest): Promise<QueryDenomsResponse> {
+    const data = QueryDenomsRequest.encode(request).finish();
+    const promise = this.rpc.request("sesamenet.nft.Query", "Denoms", data);
+    return promise.then((data) => QueryDenomsResponse.decode(new _m0.Reader(data)));
   }
 }
 

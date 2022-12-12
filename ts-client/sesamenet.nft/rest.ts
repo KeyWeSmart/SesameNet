@@ -80,6 +80,21 @@ export interface NftQueryDenomResponse {
   denom?: NftQueryDenom;
 }
 
+export interface NftQueryDenomsResponse {
+  denoms?: NftQueryDenom[];
+
+  /**
+   * PageResponse is to be embedded in gRPC response messages where the
+   * corresponding request message has used PageRequest.
+   *
+   *  message SomeResponse {
+   *          repeated Bar results = 1;
+   *          PageResponse page = 2;
+   *  }
+   */
+  pagination?: V1Beta1PageResponse;
+}
+
 export interface NftQueryOwnerResponse {
   owner?: NftOwner;
 
@@ -354,6 +369,32 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   querySupply = (denomId: string, query?: { owner?: string }, params: RequestParams = {}) =>
     this.request<NftQuerySupplyResponse, RpcStatus>({
       path: `/sesamenet/nft/collections/${denomId}/supply`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryDenoms
+   * @summary Queries a list of Denoms items.
+   * @request GET:/sesamenet/nft/denoms
+   */
+  queryDenoms = (
+    query?: {
+      "pagination.key"?: string;
+      "pagination.offset"?: string;
+      "pagination.limit"?: string;
+      "pagination.count_total"?: boolean;
+      "pagination.reverse"?: boolean;
+    },
+    params: RequestParams = {},
+  ) =>
+    this.request<NftQueryDenomsResponse, RpcStatus>({
+      path: `/sesamenet/nft/denoms`,
       method: "GET",
       query: query,
       format: "json",
