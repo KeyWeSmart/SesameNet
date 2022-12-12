@@ -50,6 +50,7 @@ func GetDenomQueryCmd() *cobra.Command {
 		CmdDenom(),
 		CmdDenomByName(),
 		CmdDenoms(),
+		CmdDenomsOfAddress(),
 	)
 
 	return cmd

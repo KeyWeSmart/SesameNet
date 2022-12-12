@@ -45013,6 +45013,60 @@ paths:
           type: boolean
       tags:
         - Query
+  /sesamenet/nft/denoms/{address}:
+    get:
+      summary: Queries a list of DenomsOfAddress items.
+      operationId: SesamenetNftDenomsOfAddress
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              denoms:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    schema:
+                      type: string
+                    owner:
+                      type: string
+                    uri:
+                      type: string
+                      title: >-
+                        This was added because Cosmos SDK's native NFT module
+                        has uri as a parameter for class which is needed for nft
+                        transfers
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: address
+          in: path
+          required: true
+          type: string
+      tags:
+        - Query
   /sesamenet/nft/denoms/{denom_id}:
     get:
       summary: Queries a list of Denom items.
@@ -75110,6 +75164,27 @@ definitions:
             title: >-
               This was added because Cosmos SDK's native NFT module has uri as a
               parameter for class which is needed for nft transfers
+  sesamenet.nft.QueryDenomsOfAddressResponse:
+    type: object
+    properties:
+      denoms:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            schema:
+              type: string
+            owner:
+              type: string
+            uri:
+              type: string
+              title: >-
+                This was added because Cosmos SDK's native NFT module has uri as
+                a parameter for class which is needed for nft transfers
   sesamenet.nft.QueryDenomsResponse:
     type: object
     properties:

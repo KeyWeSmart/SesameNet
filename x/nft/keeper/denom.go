@@ -157,3 +157,24 @@ func (k Keeper) RemoveAccessMap(ctx sdk.Context, denomID, tokenID string) error 
 
 	return nil
 }
+
+// get all denoms of a specific address (NOTE: THIS IS NOT OPTIMAL)
+func (k Keeper) GetAllDenomsOfAddress(ctx sdk.Context, address sdk.AccAddress) (denoms []types.QueryDenom) {
+	store := ctx.KVStore(k.storeKey)
+	iterator := sdk.KVStorePrefixIterator(store, types.KeyDenomID(""))
+	defer iterator.Close()
+
+	for ; iterator.Valid(); iterator.Next() {
+		var denom types.Denom
+		k.cdc.MustUnmarshal(iterator.Value(), &denom)
+
+		if denom.Owner != address.String() {
+			continue
+		}
+
+		queryDenom := types.ConvertDenomToQueryDenom(denom)
+		denoms = append(denoms, queryDenom)
+	}
+
+	return denoms
+}

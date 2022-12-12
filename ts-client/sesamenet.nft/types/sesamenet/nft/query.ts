@@ -81,6 +81,14 @@ export interface QueryNFTResponse {
   nft: BaseNFT | undefined;
 }
 
+export interface QueryDenomsOfAddressRequest {
+  address: string;
+}
+
+export interface QueryDenomsOfAddressResponse {
+  denoms: QueryDenom[];
+}
+
 function createBaseQueryParamsRequest(): QueryParamsRequest {
   return {};
 }
@@ -942,6 +950,104 @@ export const QueryNFTResponse = {
   },
 };
 
+function createBaseQueryDenomsOfAddressRequest(): QueryDenomsOfAddressRequest {
+  return { address: "" };
+}
+
+export const QueryDenomsOfAddressRequest = {
+  encode(message: QueryDenomsOfAddressRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.address !== "") {
+      writer.uint32(10).string(message.address);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryDenomsOfAddressRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryDenomsOfAddressRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.address = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryDenomsOfAddressRequest {
+    return { address: isSet(object.address) ? String(object.address) : "" };
+  },
+
+  toJSON(message: QueryDenomsOfAddressRequest): unknown {
+    const obj: any = {};
+    message.address !== undefined && (obj.address = message.address);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryDenomsOfAddressRequest>, I>>(object: I): QueryDenomsOfAddressRequest {
+    const message = createBaseQueryDenomsOfAddressRequest();
+    message.address = object.address ?? "";
+    return message;
+  },
+};
+
+function createBaseQueryDenomsOfAddressResponse(): QueryDenomsOfAddressResponse {
+  return { denoms: [] };
+}
+
+export const QueryDenomsOfAddressResponse = {
+  encode(message: QueryDenomsOfAddressResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    for (const v of message.denoms) {
+      QueryDenom.encode(v!, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryDenomsOfAddressResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryDenomsOfAddressResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.denoms.push(QueryDenom.decode(reader, reader.uint32()));
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryDenomsOfAddressResponse {
+    return { denoms: Array.isArray(object?.denoms) ? object.denoms.map((e: any) => QueryDenom.fromJSON(e)) : [] };
+  },
+
+  toJSON(message: QueryDenomsOfAddressResponse): unknown {
+    const obj: any = {};
+    if (message.denoms) {
+      obj.denoms = message.denoms.map((e) => e ? QueryDenom.toJSON(e) : undefined);
+    } else {
+      obj.denoms = [];
+    }
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryDenomsOfAddressResponse>, I>>(object: I): QueryDenomsOfAddressResponse {
+    const message = createBaseQueryDenomsOfAddressResponse();
+    message.denoms = object.denoms?.map((e) => QueryDenom.fromPartial(e)) || [];
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -960,6 +1066,8 @@ export interface Query {
   Denoms(request: QueryDenomsRequest): Promise<QueryDenomsResponse>;
   /** Queries a list of NFT items. */
   NFT(request: QueryNFTRequest): Promise<QueryNFTResponse>;
+  /** Queries a list of DenomsOfAddress items. */
+  DenomsOfAddress(request: QueryDenomsOfAddressRequest): Promise<QueryDenomsOfAddressResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -974,6 +1082,7 @@ export class QueryClientImpl implements Query {
     this.DenomByName = this.DenomByName.bind(this);
     this.Denoms = this.Denoms.bind(this);
     this.NFT = this.NFT.bind(this);
+    this.DenomsOfAddress = this.DenomsOfAddress.bind(this);
   }
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
@@ -1021,6 +1130,12 @@ export class QueryClientImpl implements Query {
     const data = QueryNFTRequest.encode(request).finish();
     const promise = this.rpc.request("sesamenet.nft.Query", "NFT", data);
     return promise.then((data) => QueryNFTResponse.decode(new _m0.Reader(data)));
+  }
+
+  DenomsOfAddress(request: QueryDenomsOfAddressRequest): Promise<QueryDenomsOfAddressResponse> {
+    const data = QueryDenomsOfAddressRequest.encode(request).finish();
+    const promise = this.rpc.request("sesamenet.nft.Query", "DenomsOfAddress", data);
+    return promise.then((data) => QueryDenomsOfAddressResponse.decode(new _m0.Reader(data)));
   }
 }
 

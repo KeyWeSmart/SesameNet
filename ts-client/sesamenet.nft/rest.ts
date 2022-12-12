@@ -80,6 +80,10 @@ export interface NftQueryDenomResponse {
   denom?: NftQueryDenom;
 }
 
+export interface NftQueryDenomsOfAddressResponse {
+  denoms?: NftQueryDenom[];
+}
+
 export interface NftQueryDenomsResponse {
   denoms?: NftQueryDenom[];
 
@@ -401,6 +405,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       path: `/sesamenet/nft/denoms`,
       method: "GET",
       query: query,
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryDenomsOfAddress
+   * @summary Queries a list of DenomsOfAddress items.
+   * @request GET:/sesamenet/nft/denoms/{address}
+   */
+  queryDenomsOfAddress = (address: string, params: RequestParams = {}) =>
+    this.request<NftQueryDenomsOfAddressResponse, RpcStatus>({
+      path: `/sesamenet/nft/denoms/${address}`,
+      method: "GET",
       format: "json",
       ...params,
     });
