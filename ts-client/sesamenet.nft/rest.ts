@@ -32,6 +32,11 @@ export interface NftQueryParamsResponse {
   params?: NftParams;
 }
 
+export interface NftQuerySupplyResponse {
+  /** @format uint64 */
+  amount?: string;
+}
+
 export interface ProtobufAny {
   "@type"?: string;
 }
@@ -168,6 +173,23 @@ export class HttpClient<SecurityDataType = unknown> {
  * @version version not set
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QuerySupply
+   * @summary Queries a list of Supply items.
+   * @request GET:/sesamenet/nft/collections/{denom_id}/supply
+   */
+  querySupply = (denomId: string, query?: { owner?: string }, params: RequestParams = {}) =>
+    this.request<NftQuerySupplyResponse, RpcStatus>({
+      path: `/sesamenet/nft/collections/${denomId}/supply`,
+      method: "GET",
+      query: query,
+      format: "json",
+      ...params,
+    });
+
   /**
    * No description
    *
