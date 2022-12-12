@@ -89,6 +89,19 @@ export interface QueryDenomsOfAddressResponse {
   denoms: QueryDenom[];
 }
 
+export interface QueryDenomsAccessMapRequest {
+  denomId: string;
+}
+
+export interface QueryDenomsAccessMapResponse {
+  accessMap: { [key: string]: boolean };
+}
+
+export interface QueryDenomsAccessMapResponse_AccessMapEntry {
+  key: string;
+  value: boolean;
+}
+
 function createBaseQueryParamsRequest(): QueryParamsRequest {
   return {};
 }
@@ -1048,6 +1061,183 @@ export const QueryDenomsOfAddressResponse = {
   },
 };
 
+function createBaseQueryDenomsAccessMapRequest(): QueryDenomsAccessMapRequest {
+  return { denomId: "" };
+}
+
+export const QueryDenomsAccessMapRequest = {
+  encode(message: QueryDenomsAccessMapRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.denomId !== "") {
+      writer.uint32(10).string(message.denomId);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryDenomsAccessMapRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryDenomsAccessMapRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.denomId = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryDenomsAccessMapRequest {
+    return { denomId: isSet(object.denomId) ? String(object.denomId) : "" };
+  },
+
+  toJSON(message: QueryDenomsAccessMapRequest): unknown {
+    const obj: any = {};
+    message.denomId !== undefined && (obj.denomId = message.denomId);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryDenomsAccessMapRequest>, I>>(object: I): QueryDenomsAccessMapRequest {
+    const message = createBaseQueryDenomsAccessMapRequest();
+    message.denomId = object.denomId ?? "";
+    return message;
+  },
+};
+
+function createBaseQueryDenomsAccessMapResponse(): QueryDenomsAccessMapResponse {
+  return { accessMap: {} };
+}
+
+export const QueryDenomsAccessMapResponse = {
+  encode(message: QueryDenomsAccessMapResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    Object.entries(message.accessMap).forEach(([key, value]) => {
+      QueryDenomsAccessMapResponse_AccessMapEntry.encode({ key: key as any, value }, writer.uint32(50).fork()).ldelim();
+    });
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryDenomsAccessMapResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryDenomsAccessMapResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 6:
+          const entry6 = QueryDenomsAccessMapResponse_AccessMapEntry.decode(reader, reader.uint32());
+          if (entry6.value !== undefined) {
+            message.accessMap[entry6.key] = entry6.value;
+          }
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryDenomsAccessMapResponse {
+    return {
+      accessMap: isObject(object.accessMap)
+        ? Object.entries(object.accessMap).reduce<{ [key: string]: boolean }>((acc, [key, value]) => {
+          acc[key] = Boolean(value);
+          return acc;
+        }, {})
+        : {},
+    };
+  },
+
+  toJSON(message: QueryDenomsAccessMapResponse): unknown {
+    const obj: any = {};
+    obj.accessMap = {};
+    if (message.accessMap) {
+      Object.entries(message.accessMap).forEach(([k, v]) => {
+        obj.accessMap[k] = v;
+      });
+    }
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryDenomsAccessMapResponse>, I>>(object: I): QueryDenomsAccessMapResponse {
+    const message = createBaseQueryDenomsAccessMapResponse();
+    message.accessMap = Object.entries(object.accessMap ?? {}).reduce<{ [key: string]: boolean }>(
+      (acc, [key, value]) => {
+        if (value !== undefined) {
+          acc[key] = Boolean(value);
+        }
+        return acc;
+      },
+      {},
+    );
+    return message;
+  },
+};
+
+function createBaseQueryDenomsAccessMapResponse_AccessMapEntry(): QueryDenomsAccessMapResponse_AccessMapEntry {
+  return { key: "", value: false };
+}
+
+export const QueryDenomsAccessMapResponse_AccessMapEntry = {
+  encode(message: QueryDenomsAccessMapResponse_AccessMapEntry, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.key !== "") {
+      writer.uint32(10).string(message.key);
+    }
+    if (message.value === true) {
+      writer.uint32(16).bool(message.value);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryDenomsAccessMapResponse_AccessMapEntry {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryDenomsAccessMapResponse_AccessMapEntry();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.key = reader.string();
+          break;
+        case 2:
+          message.value = reader.bool();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryDenomsAccessMapResponse_AccessMapEntry {
+    return {
+      key: isSet(object.key) ? String(object.key) : "",
+      value: isSet(object.value) ? Boolean(object.value) : false,
+    };
+  },
+
+  toJSON(message: QueryDenomsAccessMapResponse_AccessMapEntry): unknown {
+    const obj: any = {};
+    message.key !== undefined && (obj.key = message.key);
+    message.value !== undefined && (obj.value = message.value);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryDenomsAccessMapResponse_AccessMapEntry>, I>>(
+    object: I,
+  ): QueryDenomsAccessMapResponse_AccessMapEntry {
+    const message = createBaseQueryDenomsAccessMapResponse_AccessMapEntry();
+    message.key = object.key ?? "";
+    message.value = object.value ?? false;
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -1068,6 +1258,8 @@ export interface Query {
   NFT(request: QueryNFTRequest): Promise<QueryNFTResponse>;
   /** Queries a list of DenomsOfAddress items. */
   DenomsOfAddress(request: QueryDenomsOfAddressRequest): Promise<QueryDenomsOfAddressResponse>;
+  /** Queries a list of DenomsAccessMap items. */
+  DenomsAccessMap(request: QueryDenomsAccessMapRequest): Promise<QueryDenomsAccessMapResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -1083,6 +1275,7 @@ export class QueryClientImpl implements Query {
     this.Denoms = this.Denoms.bind(this);
     this.NFT = this.NFT.bind(this);
     this.DenomsOfAddress = this.DenomsOfAddress.bind(this);
+    this.DenomsAccessMap = this.DenomsAccessMap.bind(this);
   }
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
@@ -1137,6 +1330,12 @@ export class QueryClientImpl implements Query {
     const promise = this.rpc.request("sesamenet.nft.Query", "DenomsOfAddress", data);
     return promise.then((data) => QueryDenomsOfAddressResponse.decode(new _m0.Reader(data)));
   }
+
+  DenomsAccessMap(request: QueryDenomsAccessMapRequest): Promise<QueryDenomsAccessMapResponse> {
+    const data = QueryDenomsAccessMapRequest.encode(request).finish();
+    const promise = this.rpc.request("sesamenet.nft.Query", "DenomsAccessMap", data);
+    return promise.then((data) => QueryDenomsAccessMapResponse.decode(new _m0.Reader(data)));
+  }
 }
 
 interface Rpc {
@@ -1183,6 +1382,10 @@ function longToNumber(long: Long): number {
 if (_m0.util.Long !== Long) {
   _m0.util.Long = Long as any;
   _m0.configure();
+}
+
+function isObject(value: any): boolean {
+  return typeof value === "object" && value !== null;
 }
 
 function isSet(value: any): boolean {

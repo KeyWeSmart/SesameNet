@@ -80,6 +80,10 @@ export interface NftQueryDenomResponse {
   denom?: NftQueryDenom;
 }
 
+export interface NftQueryDenomsAccessMapResponse {
+  access_map?: Record<string, boolean>;
+}
+
 export interface NftQueryDenomsOfAddressResponse {
   denoms?: NftQueryDenom[];
 }
@@ -339,6 +343,22 @@ export class HttpClient<SecurityDataType = unknown> {
  * @version version not set
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryDenomsAccessMap
+   * @summary Queries a list of DenomsAccessMap items.
+   * @request GET:/sesamenet/nft/access-map/{denom_id}
+   */
+  queryDenomsAccessMap = (denomId: string, params: RequestParams = {}) =>
+    this.request<NftQueryDenomsAccessMapResponse, RpcStatus>({
+      path: `/sesamenet/nft/access-map/${denomId}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
   /**
    * No description
    *
