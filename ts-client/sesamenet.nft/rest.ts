@@ -95,6 +95,10 @@ export interface NftQueryDenomsResponse {
   pagination?: V1Beta1PageResponse;
 }
 
+export interface NftQueryNFTResponse {
+  nft?: NftBaseNFT;
+}
+
 export interface NftQueryOwnerResponse {
   owner?: NftOwner;
 
@@ -428,6 +432,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   queryDenomByName = (denomName: string, params: RequestParams = {}) =>
     this.request<NftQueryDenomByNameResponse, RpcStatus>({
       path: `/sesamenet/nft/denoms/${denomName}`,
+      method: "GET",
+      format: "json",
+      ...params,
+    });
+
+  /**
+   * No description
+   *
+   * @tags Query
+   * @name QueryNft
+   * @summary Queries a list of NFT items.
+   * @request GET:/sesamenet/nft/nfts/{denom_id}/{token_id}
+   */
+  queryNft = (denomId: string, tokenId: string, params: RequestParams = {}) =>
+    this.request<NftQueryNFTResponse, RpcStatus>({
+      path: `/sesamenet/nft/nfts/${denomId}/${tokenId}`,
       method: "GET",
       format: "json",
       ...params,

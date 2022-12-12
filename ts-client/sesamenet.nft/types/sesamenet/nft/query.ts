@@ -2,7 +2,7 @@
 import Long from "long";
 import _m0 from "protobufjs/minimal";
 import { PageRequest, PageResponse } from "../../cosmos/base/query/v1beta1/pagination";
-import { Owner, QueryCollection, QueryDenom } from "./nft";
+import { BaseNFT, Owner, QueryCollection, QueryDenom } from "./nft";
 import { Params } from "./params";
 
 export const protobufPackage = "sesamenet.nft";
@@ -70,6 +70,15 @@ export interface QueryDenomsRequest {
 export interface QueryDenomsResponse {
   denoms: QueryDenom[];
   pagination: PageResponse | undefined;
+}
+
+export interface QueryNFTRequest {
+  denomId: string;
+  tokenId: string;
+}
+
+export interface QueryNFTResponse {
+  nft: BaseNFT | undefined;
 }
 
 function createBaseQueryParamsRequest(): QueryParamsRequest {
@@ -828,6 +837,111 @@ export const QueryDenomsResponse = {
   },
 };
 
+function createBaseQueryNFTRequest(): QueryNFTRequest {
+  return { denomId: "", tokenId: "" };
+}
+
+export const QueryNFTRequest = {
+  encode(message: QueryNFTRequest, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.denomId !== "") {
+      writer.uint32(10).string(message.denomId);
+    }
+    if (message.tokenId !== "") {
+      writer.uint32(18).string(message.tokenId);
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryNFTRequest {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryNFTRequest();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.denomId = reader.string();
+          break;
+        case 2:
+          message.tokenId = reader.string();
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryNFTRequest {
+    return {
+      denomId: isSet(object.denomId) ? String(object.denomId) : "",
+      tokenId: isSet(object.tokenId) ? String(object.tokenId) : "",
+    };
+  },
+
+  toJSON(message: QueryNFTRequest): unknown {
+    const obj: any = {};
+    message.denomId !== undefined && (obj.denomId = message.denomId);
+    message.tokenId !== undefined && (obj.tokenId = message.tokenId);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryNFTRequest>, I>>(object: I): QueryNFTRequest {
+    const message = createBaseQueryNFTRequest();
+    message.denomId = object.denomId ?? "";
+    message.tokenId = object.tokenId ?? "";
+    return message;
+  },
+};
+
+function createBaseQueryNFTResponse(): QueryNFTResponse {
+  return { nft: undefined };
+}
+
+export const QueryNFTResponse = {
+  encode(message: QueryNFTResponse, writer: _m0.Writer = _m0.Writer.create()): _m0.Writer {
+    if (message.nft !== undefined) {
+      BaseNFT.encode(message.nft, writer.uint32(10).fork()).ldelim();
+    }
+    return writer;
+  },
+
+  decode(input: _m0.Reader | Uint8Array, length?: number): QueryNFTResponse {
+    const reader = input instanceof _m0.Reader ? input : new _m0.Reader(input);
+    let end = length === undefined ? reader.len : reader.pos + length;
+    const message = createBaseQueryNFTResponse();
+    while (reader.pos < end) {
+      const tag = reader.uint32();
+      switch (tag >>> 3) {
+        case 1:
+          message.nft = BaseNFT.decode(reader, reader.uint32());
+          break;
+        default:
+          reader.skipType(tag & 7);
+          break;
+      }
+    }
+    return message;
+  },
+
+  fromJSON(object: any): QueryNFTResponse {
+    return { nft: isSet(object.nft) ? BaseNFT.fromJSON(object.nft) : undefined };
+  },
+
+  toJSON(message: QueryNFTResponse): unknown {
+    const obj: any = {};
+    message.nft !== undefined && (obj.nft = message.nft ? BaseNFT.toJSON(message.nft) : undefined);
+    return obj;
+  },
+
+  fromPartial<I extends Exact<DeepPartial<QueryNFTResponse>, I>>(object: I): QueryNFTResponse {
+    const message = createBaseQueryNFTResponse();
+    message.nft = (object.nft !== undefined && object.nft !== null) ? BaseNFT.fromPartial(object.nft) : undefined;
+    return message;
+  },
+};
+
 /** Query defines the gRPC querier service. */
 export interface Query {
   /** Parameters queries the parameters of the module. */
@@ -844,6 +958,8 @@ export interface Query {
   DenomByName(request: QueryDenomByNameRequest): Promise<QueryDenomByNameResponse>;
   /** Queries a list of Denoms items. */
   Denoms(request: QueryDenomsRequest): Promise<QueryDenomsResponse>;
+  /** Queries a list of NFT items. */
+  NFT(request: QueryNFTRequest): Promise<QueryNFTResponse>;
 }
 
 export class QueryClientImpl implements Query {
@@ -857,6 +973,7 @@ export class QueryClientImpl implements Query {
     this.Denom = this.Denom.bind(this);
     this.DenomByName = this.DenomByName.bind(this);
     this.Denoms = this.Denoms.bind(this);
+    this.NFT = this.NFT.bind(this);
   }
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
@@ -898,6 +1015,12 @@ export class QueryClientImpl implements Query {
     const data = QueryDenomsRequest.encode(request).finish();
     const promise = this.rpc.request("sesamenet.nft.Query", "Denoms", data);
     return promise.then((data) => QueryDenomsResponse.decode(new _m0.Reader(data)));
+  }
+
+  NFT(request: QueryNFTRequest): Promise<QueryNFTResponse> {
+    const data = QueryNFTRequest.encode(request).finish();
+    const promise = this.rpc.request("sesamenet.nft.Query", "NFT", data);
+    return promise.then((data) => QueryNFTResponse.decode(new _m0.Reader(data)));
   }
 }
 
