@@ -22,7 +22,7 @@ build:
   main: "./cmd/sesamenetd"
 faucet:
   name: bob
-  coins: ["5token", "100000stake"]
+  coins: ["100000ssc"]
 init:
   client:
     chain-id: "SesameNet"
