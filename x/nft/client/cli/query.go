@@ -30,7 +30,6 @@ func GetQueryCmd(queryRoute string) *cobra.Command {
 		CmdCollection(),
 		GetDenomQueryCmd(),
 		GetTokenQueryCmd(),
-		CmdDenomsAccessMap(),
 	)
 
 	// this line is used by starport scaffolding # 1
@@ -52,6 +51,7 @@ func GetDenomQueryCmd() *cobra.Command {
 		CmdDenomByName(),
 		CmdDenoms(),
 		CmdDenomsOfAddress(),
+		CmdDenomsAccessMap(),
 	)
 
 	return cmd
