@@ -104,13 +104,13 @@ import (
 	tmos "github.com/tendermint/tendermint/libs/os"
 	dbm "github.com/tendermint/tm-db"
 
-	nftmodule "sesamenet/x/nft"
-	nftmodulekeeper "sesamenet/x/nft/keeper"
-	nftmoduletypes "sesamenet/x/nft/types"
+	nftmodule "github.com/keywesmart/sesamenet/x/nft"
+	nftmodulekeeper "github.com/keywesmart/sesamenet/x/nft/keeper"
+	nftmoduletypes "github.com/keywesmart/sesamenet/x/nft/types"
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 
-	appparams "sesamenet/app/params"
-	"sesamenet/docs"
+	appparams "github.com/keywesmart/sesamenet/app/params"
+	"github.com/keywesmart/sesamenet/docs"
 )
 
 const (

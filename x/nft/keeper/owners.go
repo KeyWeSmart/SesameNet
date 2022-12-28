@@ -4,7 +4,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"sesamenet/x/nft/types"
+	"github.com/keywesmart/sesamenet/x/nft/types"
 )
 
 // GetOwner gets all the ID collections owned by an address and denom ID

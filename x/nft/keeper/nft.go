@@ -4,8 +4,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"sesamenet/x/nft/exported"
-	"sesamenet/x/nft/types"
+	"github.com/keywesmart/sesamenet/x/nft/exported"
+	"github.com/keywesmart/sesamenet/x/nft/types"
 )
 
 // GetNFT gets the the specified NFT

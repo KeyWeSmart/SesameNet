@@ -3,7 +3,7 @@ package cmd
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"sesamenet/app"
+	"github.com/keywesmart/sesamenet/app"
 )
 
 func initSDKConfig() {

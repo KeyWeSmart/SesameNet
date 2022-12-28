@@ -3,8 +3,8 @@ package keeper
 import (
 	"context"
 
-	"sesamenet/x/nft/types"
-	"sesamenet/x/utils"
+	"github.com/keywesmart/sesamenet/x/nft/types"
+	"github.com/keywesmart/sesamenet/x/utils"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )

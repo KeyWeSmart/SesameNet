@@ -4,9 +4,9 @@ import (
 	"context"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
+	"github.com/keywesmart/sesamenet/x/nft/types"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
-	"sesamenet/x/nft/types"
 )
 
 func (k Keeper) Params(c context.Context, req *types.QueryParamsRequest) (*types.QueryParamsResponse, error) {

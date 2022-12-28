@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"sesamenet/app"
+	"github.com/keywesmart/sesamenet/app"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	"github.com/cosmos/cosmos-sdk/crypto/hd"

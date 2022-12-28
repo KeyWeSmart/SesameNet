@@ -1,7 +1,7 @@
 package types
 
 import (
-	"sesamenet/x/nft/exported"
+	"github.com/keywesmart/sesamenet/x/nft/exported"
 )
 
 // NewCollection creates a new NFT Collection

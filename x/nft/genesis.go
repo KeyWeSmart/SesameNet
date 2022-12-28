@@ -1,8 +1,8 @@
 package nft
 
 import (
-	"sesamenet/x/nft/keeper"
-	"sesamenet/x/nft/types"
+	"github.com/keywesmart/sesamenet/x/nft/keeper"
+	"github.com/keywesmart/sesamenet/x/nft/types"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )

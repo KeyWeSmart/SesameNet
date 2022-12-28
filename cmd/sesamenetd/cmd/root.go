@@ -37,8 +37,8 @@ import (
 
 	// this line is used by starport scaffolding # root/moduleImport
 
-	"sesamenet/app"
-	appparams "sesamenet/app/params"
+	"github.com/keywesmart/sesamenet/app"
+	appparams "github.com/keywesmart/sesamenet/app/params"
 )
 
 // NewRootCmd creates a new root command for a Cosmos SDK application

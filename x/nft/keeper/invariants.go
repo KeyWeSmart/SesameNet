@@ -7,7 +7,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"sesamenet/x/nft/types"
+	"github.com/keywesmart/sesamenet/x/nft/types"
 )
 
 // RegisterInvariants registers all supply invariants

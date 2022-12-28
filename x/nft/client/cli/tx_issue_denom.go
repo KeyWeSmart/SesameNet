@@ -5,7 +5,7 @@ import (
 	"os"
 	"strconv"
 
-	"sesamenet/x/nft/types"
+	"github.com/keywesmart/sesamenet/x/nft/types"
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"

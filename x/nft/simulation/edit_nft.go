@@ -6,8 +6,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
-	"sesamenet/x/nft/keeper"
-	"sesamenet/x/nft/types"
+	"github.com/keywesmart/sesamenet/x/nft/keeper"
+	"github.com/keywesmart/sesamenet/x/nft/types"
 )
 
 func SimulateMsgEditNFT(

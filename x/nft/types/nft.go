@@ -5,7 +5,7 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
-	"sesamenet/x/nft/exported"
+	"github.com/keywesmart/sesamenet/x/nft/exported"
 )
 
 var _ exported.NFT = BaseNFT{}

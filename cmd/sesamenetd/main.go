@@ -6,8 +6,8 @@ import (
 	"github.com/cosmos/cosmos-sdk/server"
 	svrcmd "github.com/cosmos/cosmos-sdk/server/cmd"
 
-	"sesamenet/app"
-	"sesamenet/cmd/sesamenetd/cmd"
+	"github.com/keywesmart/sesamenet/app"
+	"github.com/keywesmart/sesamenet/cmd/sesamenetd/cmd"
 )
 
 func main() {

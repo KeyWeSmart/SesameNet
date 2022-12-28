@@ -3,7 +3,7 @@ package types_test
 import (
 	"testing"
 
-	"sesamenet/x/nft/types"
+	"github.com/keywesmart/sesamenet/x/nft/types"
 
 	"github.com/stretchr/testify/require"
 )

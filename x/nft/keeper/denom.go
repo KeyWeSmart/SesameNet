@@ -4,8 +4,8 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
-	"sesamenet/x/nft/types"
-	"sesamenet/x/utils"
+	"github.com/keywesmart/sesamenet/x/nft/types"
+	"github.com/keywesmart/sesamenet/x/utils"
 )
 
 // HasDenomID returns whether the specified denom ID exists

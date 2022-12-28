@@ -4,8 +4,8 @@ import (
 	"testing"
 
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	"github.com/keywesmart/sesamenet/testutil/sample"
 	"github.com/stretchr/testify/require"
-	"sesamenet/testutil/sample"
 )
 
 func TestMsgIssueDenom_ValidateBasic(t *testing.T) {

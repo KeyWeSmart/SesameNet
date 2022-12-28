@@ -8,8 +8,8 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"sesamenet/x/nft/exported"
-	"sesamenet/x/nft/types"
+	"github.com/keywesmart/sesamenet/x/nft/exported"
+	"github.com/keywesmart/sesamenet/x/nft/types"
 )
 
 // SetGenesisCollection saves all NFTs and returns an error if there already exists or any one of the owner's bech32

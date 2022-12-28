@@ -3,9 +3,9 @@ package nft
 import (
 	"math/rand"
 
-	"sesamenet/testutil/sample"
-	nftsimulation "sesamenet/x/nft/simulation"
-	"sesamenet/x/nft/types"
+	"github.com/keywesmart/sesamenet/testutil/sample"
+	nftsimulation "github.com/keywesmart/sesamenet/x/nft/simulation"
+	"github.com/keywesmart/sesamenet/x/nft/types"
 
 	"github.com/cosmos/cosmos-sdk/baseapp"
 	simappparams "github.com/cosmos/cosmos-sdk/simapp/params"
