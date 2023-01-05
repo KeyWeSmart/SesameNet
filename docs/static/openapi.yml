@@ -44682,10 +44682,10 @@ paths:
           format: uint64
       tags:
         - Query
-  /sesamenet/nft/access-map/{denom_id}:
+  /keywesmart/sesamenet/nft/access-map/{denom_id}:
     get:
       summary: Queries a list of DenomsAccessMap items.
-      operationId: SesamenetNftDenomsAccessMap
+      operationId: KeywesmartSesamenetNftDenomsAccessMap
       responses:
         '200':
           description: A successful response.
@@ -44721,10 +44721,10 @@ paths:
           type: string
       tags:
         - Query
-  /sesamenet/nft/collections/{denom_id}:
+  /keywesmart/sesamenet/nft/collections/{denom_id}:
     get:
       summary: Queries a list of Collection items.
-      operationId: SesamenetNftCollection
+      operationId: KeywesmartSesamenetNftCollection
       responses:
         '200':
           description: A successful response.
@@ -44876,10 +44876,10 @@ paths:
           type: boolean
       tags:
         - Query
-  /sesamenet/nft/collections/{denom_id}/supply:
+  /keywesmart/sesamenet/nft/collections/{denom_id}/supply:
     get:
       summary: Queries a list of Supply items.
-      operationId: SesamenetNftSupply
+      operationId: KeywesmartSesamenetNftSupply
       responses:
         '200':
           description: A successful response.
@@ -44918,10 +44918,10 @@ paths:
           type: string
       tags:
         - Query
-  /sesamenet/nft/denoms:
+  /keywesmart/sesamenet/nft/denoms:
     get:
       summary: Queries a list of Denoms items.
-      operationId: SesamenetNftDenoms
+      operationId: KeywesmartSesamenetNftDenoms
       responses:
         '200':
           description: A successful response.
@@ -45052,10 +45052,10 @@ paths:
           type: boolean
       tags:
         - Query
-  /sesamenet/nft/denoms/{address}:
+  /keywesmart/sesamenet/nft/denoms/{address}:
     get:
       summary: Queries a list of DenomsOfAddress items.
-      operationId: SesamenetNftDenomsOfAddress
+      operationId: KeywesmartSesamenetNftDenomsOfAddress
       responses:
         '200':
           description: A successful response.
@@ -45106,10 +45106,10 @@ paths:
           type: string
       tags:
         - Query
-  /sesamenet/nft/denoms/{denom_id}:
+  /keywesmart/sesamenet/nft/denoms/{denom_id}:
     get:
       summary: Queries a list of Denom items.
-      operationId: SesamenetNftDenom
+      operationId: KeywesmartSesamenetNftDenom
       responses:
         '200':
           description: A successful response.
@@ -45158,10 +45158,10 @@ paths:
           type: string
       tags:
         - Query
-  /sesamenet/nft/denoms/{denom_name}:
+  /keywesmart/sesamenet/nft/denoms/{denom_name}:
     get:
       summary: Queries a list of DenomByName items.
-      operationId: SesamenetNftDenomByName
+      operationId: KeywesmartSesamenetNftDenomByName
       responses:
         '200':
           description: A successful response.
@@ -45210,10 +45210,10 @@ paths:
           type: string
       tags:
         - Query
-  /sesamenet/nft/nfts/{denom_id}/{token_id}:
+  /keywesmart/sesamenet/nft/nfts/{denom_id}/{token_id}:
     get:
       summary: Queries a list of NFT items.
-      operationId: SesamenetNftNFT
+      operationId: KeywesmartSesamenetNftNFT
       responses:
         '200':
           description: A successful response.
@@ -45263,10 +45263,10 @@ paths:
           type: string
       tags:
         - Query
-  /sesamenet/nft/nfts/{owner}:
+  /keywesmart/sesamenet/nft/nfts/{owner}:
     get:
       summary: Queries a list of Owner items.
-      operationId: SesamenetNftOwner
+      operationId: KeywesmartSesamenetNftOwner
       responses:
         '200':
           description: A successful response.
@@ -45406,10 +45406,10 @@ paths:
           type: boolean
       tags:
         - Query
-  /sesamenet/nft/params:
+  /keywesmart/sesamenet/nft/params:
     get:
       summary: Parameters queries the parameters of the module.
-      operationId: SesamenetNftParams
+      operationId: KeywesmartSesamenetNftParams
       responses:
         '200':
           description: A successful response.
@@ -74995,7 +74995,7 @@ definitions:
     description: |-
       Version defines the versioning scheme used to negotiate the IBC verison in
       the connection handshake.
-  sesamenet.nft.BaseNFT:
+  keywesmart.sesamenet.nft.BaseNFT:
     type: object
     properties:
       id:
@@ -75009,7 +75009,7 @@ definitions:
       owner:
         type: string
     title: BaseNFT defines a non-fungible token
-  sesamenet.nft.IDCollection:
+  keywesmart.sesamenet.nft.IDCollection:
     type: object
     properties:
       denom_id:
@@ -75019,17 +75019,17 @@ definitions:
         items:
           type: string
     title: IDCollection defines a type of collection with specified ID
-  sesamenet.nft.MsgBurnNFTResponse:
+  keywesmart.sesamenet.nft.MsgBurnNFTResponse:
     type: object
-  sesamenet.nft.MsgEditNFTResponse:
+  keywesmart.sesamenet.nft.MsgEditNFTResponse:
     type: object
-  sesamenet.nft.MsgIssueDenomResponse:
+  keywesmart.sesamenet.nft.MsgIssueDenomResponse:
     type: object
-  sesamenet.nft.MsgMintNFTResponse:
+  keywesmart.sesamenet.nft.MsgMintNFTResponse:
     type: object
-  sesamenet.nft.MsgTransferNFTResponse:
+  keywesmart.sesamenet.nft.MsgTransferNFTResponse:
     type: object
-  sesamenet.nft.Owner:
+  keywesmart.sesamenet.nft.Owner:
     type: object
     properties:
       address:
@@ -75047,10 +75047,10 @@ definitions:
                 type: string
           title: IDCollection defines a type of collection with specified ID
     title: Owner defines a type of owner
-  sesamenet.nft.Params:
+  keywesmart.sesamenet.nft.Params:
     type: object
     description: Params defines the parameters for the module.
-  sesamenet.nft.QueryCollection:
+  keywesmart.sesamenet.nft.QueryCollection:
     type: object
     properties:
       denom:
@@ -75085,7 +75085,7 @@ definitions:
             owner:
               type: string
           title: BaseNFT defines a non-fungible token
-  sesamenet.nft.QueryCollectionResponse:
+  keywesmart.sesamenet.nft.QueryCollectionResponse:
     type: object
     properties:
       collection:
@@ -75149,7 +75149,7 @@ definitions:
                    repeated Bar results = 1;
                    PageResponse page = 2;
            }
-  sesamenet.nft.QueryDenom:
+  keywesmart.sesamenet.nft.QueryDenom:
     type: object
     properties:
       id:
@@ -75165,7 +75165,7 @@ definitions:
         title: >-
           This was added because Cosmos SDK's native NFT module has uri as a
           parameter for class which is needed for nft transfers
-  sesamenet.nft.QueryDenomByNameResponse:
+  keywesmart.sesamenet.nft.QueryDenomByNameResponse:
     type: object
     properties:
       denom:
@@ -75184,7 +75184,7 @@ definitions:
             title: >-
               This was added because Cosmos SDK's native NFT module has uri as a
               parameter for class which is needed for nft transfers
-  sesamenet.nft.QueryDenomResponse:
+  keywesmart.sesamenet.nft.QueryDenomResponse:
     type: object
     properties:
       denom:
@@ -75203,14 +75203,14 @@ definitions:
             title: >-
               This was added because Cosmos SDK's native NFT module has uri as a
               parameter for class which is needed for nft transfers
-  sesamenet.nft.QueryDenomsAccessMapResponse:
+  keywesmart.sesamenet.nft.QueryDenomsAccessMapResponse:
     type: object
     properties:
       access_map:
         type: object
         additionalProperties:
           type: boolean
-  sesamenet.nft.QueryDenomsOfAddressResponse:
+  keywesmart.sesamenet.nft.QueryDenomsOfAddressResponse:
     type: object
     properties:
       denoms:
@@ -75231,7 +75231,7 @@ definitions:
               title: >-
                 This was added because Cosmos SDK's native NFT module has uri as
                 a parameter for class which is needed for nft transfers
-  sesamenet.nft.QueryDenomsResponse:
+  keywesmart.sesamenet.nft.QueryDenomsResponse:
     type: object
     properties:
       denoms:
@@ -75278,7 +75278,7 @@ definitions:
                    repeated Bar results = 1;
                    PageResponse page = 2;
            }
-  sesamenet.nft.QueryNFTResponse:
+  keywesmart.sesamenet.nft.QueryNFTResponse:
     type: object
     properties:
       nft:
@@ -75295,7 +75295,7 @@ definitions:
           owner:
             type: string
         title: BaseNFT defines a non-fungible token
-  sesamenet.nft.QueryOwnerResponse:
+  keywesmart.sesamenet.nft.QueryOwnerResponse:
     type: object
     properties:
       owner:
@@ -75342,14 +75342,14 @@ definitions:
                    repeated Bar results = 1;
                    PageResponse page = 2;
            }
-  sesamenet.nft.QueryParamsResponse:
+  keywesmart.sesamenet.nft.QueryParamsResponse:
     type: object
     properties:
       params:
         description: params holds all the parameters of this module.
         type: object
     description: QueryParamsResponse is response type for the Query/Params RPC method.
-  sesamenet.nft.QuerySupplyResponse:
+  keywesmart.sesamenet.nft.QuerySupplyResponse:
     type: object
     properties:
       amount:

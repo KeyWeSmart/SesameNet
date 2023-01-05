@@ -1076,25 +1076,25 @@ func RegisterQueryHandlerClient(ctx context.Context, mux *runtime.ServeMux, clie
 }
 
 var (
-	pattern_Query_Params_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"sesamenet", "nft", "params"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_Params_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"keywesmart", "sesamenet", "nft", "params"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_Supply_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"sesamenet", "nft", "collections", "denom_id", "supply"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_Supply_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"keywesmart", "sesamenet", "nft", "collections", "denom_id", "supply"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_Owner_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"sesamenet", "nft", "nfts", "owner"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_Owner_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"keywesmart", "sesamenet", "nft", "nfts", "owner"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_Collection_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"sesamenet", "nft", "collections", "denom_id"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_Collection_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"keywesmart", "sesamenet", "nft", "collections", "denom_id"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_Denom_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"sesamenet", "nft", "denoms", "denom_id"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_Denom_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"keywesmart", "sesamenet", "nft", "denoms", "denom_id"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_DenomByName_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"sesamenet", "nft", "denoms", "denom_name"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_DenomByName_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"keywesmart", "sesamenet", "nft", "denoms", "denom_name"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_Denoms_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"sesamenet", "nft", "denoms"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_Denoms_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"keywesmart", "sesamenet", "nft", "denoms"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_NFT_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 1, 0, 4, 1, 5, 4}, []string{"sesamenet", "nft", "nfts", "denom_id", "token_id"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_NFT_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 1, 0, 4, 1, 5, 5}, []string{"keywesmart", "sesamenet", "nft", "nfts", "denom_id", "token_id"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_DenomsOfAddress_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"sesamenet", "nft", "denoms", "address"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_DenomsOfAddress_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"keywesmart", "sesamenet", "nft", "denoms", "address"}, "", runtime.AssumeColonVerbOpt(true)))
 
-	pattern_Query_DenomsAccessMap_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"sesamenet", "nft", "access-map", "denom_id"}, "", runtime.AssumeColonVerbOpt(true)))
+	pattern_Query_DenomsAccessMap_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"keywesmart", "sesamenet", "nft", "access-map", "denom_id"}, "", runtime.AssumeColonVerbOpt(true)))
 )
 
 var (

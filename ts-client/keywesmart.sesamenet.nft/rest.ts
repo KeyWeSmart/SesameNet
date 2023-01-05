@@ -349,11 +349,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryDenomsAccessMap
    * @summary Queries a list of DenomsAccessMap items.
-   * @request GET:/sesamenet/nft/access-map/{denom_id}
+   * @request GET:/keywesmart/sesamenet/nft/access-map/{denom_id}
    */
   queryDenomsAccessMap = (denomId: string, params: RequestParams = {}) =>
     this.request<NftQueryDenomsAccessMapResponse, RpcStatus>({
-      path: `/sesamenet/nft/access-map/${denomId}`,
+      path: `/keywesmart/sesamenet/nft/access-map/${denomId}`,
       method: "GET",
       format: "json",
       ...params,
@@ -365,7 +365,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryCollection
    * @summary Queries a list of Collection items.
-   * @request GET:/sesamenet/nft/collections/{denom_id}
+   * @request GET:/keywesmart/sesamenet/nft/collections/{denom_id}
    */
   queryCollection = (
     denomId: string,
@@ -379,7 +379,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     params: RequestParams = {},
   ) =>
     this.request<NftQueryCollectionResponse, RpcStatus>({
-      path: `/sesamenet/nft/collections/${denomId}`,
+      path: `/keywesmart/sesamenet/nft/collections/${denomId}`,
       method: "GET",
       query: query,
       format: "json",
@@ -392,11 +392,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QuerySupply
    * @summary Queries a list of Supply items.
-   * @request GET:/sesamenet/nft/collections/{denom_id}/supply
+   * @request GET:/keywesmart/sesamenet/nft/collections/{denom_id}/supply
    */
   querySupply = (denomId: string, query?: { owner?: string }, params: RequestParams = {}) =>
     this.request<NftQuerySupplyResponse, RpcStatus>({
-      path: `/sesamenet/nft/collections/${denomId}/supply`,
+      path: `/keywesmart/sesamenet/nft/collections/${denomId}/supply`,
       method: "GET",
       query: query,
       format: "json",
@@ -409,7 +409,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryDenoms
    * @summary Queries a list of Denoms items.
-   * @request GET:/sesamenet/nft/denoms
+   * @request GET:/keywesmart/sesamenet/nft/denoms
    */
   queryDenoms = (
     query?: {
@@ -422,7 +422,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     params: RequestParams = {},
   ) =>
     this.request<NftQueryDenomsResponse, RpcStatus>({
-      path: `/sesamenet/nft/denoms`,
+      path: `/keywesmart/sesamenet/nft/denoms`,
       method: "GET",
       query: query,
       format: "json",
@@ -435,11 +435,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryDenomsOfAddress
    * @summary Queries a list of DenomsOfAddress items.
-   * @request GET:/sesamenet/nft/denoms/{address}
+   * @request GET:/keywesmart/sesamenet/nft/denoms/{address}
    */
   queryDenomsOfAddress = (address: string, params: RequestParams = {}) =>
     this.request<NftQueryDenomsOfAddressResponse, RpcStatus>({
-      path: `/sesamenet/nft/denoms/${address}`,
+      path: `/keywesmart/sesamenet/nft/denoms/${address}`,
       method: "GET",
       format: "json",
       ...params,
@@ -451,11 +451,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryDenom
    * @summary Queries a list of Denom items.
-   * @request GET:/sesamenet/nft/denoms/{denom_id}
+   * @request GET:/keywesmart/sesamenet/nft/denoms/{denom_id}
    */
   queryDenom = (denomId: string, params: RequestParams = {}) =>
     this.request<NftQueryDenomResponse, RpcStatus>({
-      path: `/sesamenet/nft/denoms/${denomId}`,
+      path: `/keywesmart/sesamenet/nft/denoms/${denomId}`,
       method: "GET",
       format: "json",
       ...params,
@@ -467,11 +467,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryDenomByName
    * @summary Queries a list of DenomByName items.
-   * @request GET:/sesamenet/nft/denoms/{denom_name}
+   * @request GET:/keywesmart/sesamenet/nft/denoms/{denom_name}
    */
   queryDenomByName = (denomName: string, params: RequestParams = {}) =>
     this.request<NftQueryDenomByNameResponse, RpcStatus>({
-      path: `/sesamenet/nft/denoms/${denomName}`,
+      path: `/keywesmart/sesamenet/nft/denoms/${denomName}`,
       method: "GET",
       format: "json",
       ...params,
@@ -483,11 +483,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryNft
    * @summary Queries a list of NFT items.
-   * @request GET:/sesamenet/nft/nfts/{denom_id}/{token_id}
+   * @request GET:/keywesmart/sesamenet/nft/nfts/{denom_id}/{token_id}
    */
   queryNft = (denomId: string, tokenId: string, params: RequestParams = {}) =>
     this.request<NftQueryNFTResponse, RpcStatus>({
-      path: `/sesamenet/nft/nfts/${denomId}/${tokenId}`,
+      path: `/keywesmart/sesamenet/nft/nfts/${denomId}/${tokenId}`,
       method: "GET",
       format: "json",
       ...params,
@@ -499,7 +499,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryOwner
    * @summary Queries a list of Owner items.
-   * @request GET:/sesamenet/nft/nfts/{owner}
+   * @request GET:/keywesmart/sesamenet/nft/nfts/{owner}
    */
   queryOwner = (
     owner: string,
@@ -514,7 +514,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     params: RequestParams = {},
   ) =>
     this.request<NftQueryOwnerResponse, RpcStatus>({
-      path: `/sesamenet/nft/nfts/${owner}`,
+      path: `/keywesmart/sesamenet/nft/nfts/${owner}`,
       method: "GET",
       query: query,
       format: "json",
@@ -527,11 +527,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @tags Query
    * @name QueryParams
    * @summary Parameters queries the parameters of the module.
-   * @request GET:/sesamenet/nft/params
+   * @request GET:/keywesmart/sesamenet/nft/params
    */
   queryParams = (params: RequestParams = {}) =>
     this.request<NftQueryParamsResponse, RpcStatus>({
-      path: `/sesamenet/nft/params`,
+      path: `/keywesmart/sesamenet/nft/params`,
       method: "GET",
       format: "json",
       ...params,

@@ -1,11 +1,11 @@
 syntax = "proto3";
-package sesamenet.nft;
+package keywesmart.sesamenet.nft;
 
 import "gogoproto/gogo.proto";
 import "sesamenet/nft/nft.proto";
 // this line is used by starport scaffolding # genesis/proto/import
 
-option go_package = "sesamenet/x/nft/types";
+option go_package = "github.com/keywesmart/sesamenet/x/nft/types";
 
 // GenesisState defines the nft module's genesis state.
 message GenesisState {

@@ -1,7 +1,7 @@
 /* eslint-disable */
 import _m0 from "protobufjs/minimal";
 
-export const protobufPackage = "sesamenet.nft";
+export const protobufPackage = "keywesmart.sesamenet.nft";
 
 /** Params defines the parameters for the module. */
 export interface Params {

@@ -1,7 +1,7 @@
 /* eslint-disable */
 import _m0 from "protobufjs/minimal";
 
-export const protobufPackage = "sesamenet.nft";
+export const protobufPackage = "keywesmart.sesamenet.nft";
 
 export interface MsgIssueDenom {
   id: string;
@@ -700,31 +700,31 @@ export class MsgClientImpl implements Msg {
   }
   IssueDenom(request: MsgIssueDenom): Promise<MsgIssueDenomResponse> {
     const data = MsgIssueDenom.encode(request).finish();
-    const promise = this.rpc.request("sesamenet.nft.Msg", "IssueDenom", data);
+    const promise = this.rpc.request("keywesmart.sesamenet.nft.Msg", "IssueDenom", data);
     return promise.then((data) => MsgIssueDenomResponse.decode(new _m0.Reader(data)));
   }
 
   MintNFT(request: MsgMintNFT): Promise<MsgMintNFTResponse> {
     const data = MsgMintNFT.encode(request).finish();
-    const promise = this.rpc.request("sesamenet.nft.Msg", "MintNFT", data);
+    const promise = this.rpc.request("keywesmart.sesamenet.nft.Msg", "MintNFT", data);
     return promise.then((data) => MsgMintNFTResponse.decode(new _m0.Reader(data)));
   }
 
   EditNFT(request: MsgEditNFT): Promise<MsgEditNFTResponse> {
     const data = MsgEditNFT.encode(request).finish();
-    const promise = this.rpc.request("sesamenet.nft.Msg", "EditNFT", data);
+    const promise = this.rpc.request("keywesmart.sesamenet.nft.Msg", "EditNFT", data);
     return promise.then((data) => MsgEditNFTResponse.decode(new _m0.Reader(data)));
   }
 
   TransferNFT(request: MsgTransferNFT): Promise<MsgTransferNFTResponse> {
     const data = MsgTransferNFT.encode(request).finish();
-    const promise = this.rpc.request("sesamenet.nft.Msg", "TransferNFT", data);
+    const promise = this.rpc.request("keywesmart.sesamenet.nft.Msg", "TransferNFT", data);
     return promise.then((data) => MsgTransferNFTResponse.decode(new _m0.Reader(data)));
   }
 
   BurnNFT(request: MsgBurnNFT): Promise<MsgBurnNFTResponse> {
     const data = MsgBurnNFT.encode(request).finish();
-    const promise = this.rpc.request("sesamenet.nft.Msg", "BurnNFT", data);
+    const promise = this.rpc.request("keywesmart.sesamenet.nft.Msg", "BurnNFT", data);
     return promise.then((data) => MsgBurnNFTResponse.decode(new _m0.Reader(data)));
   }
 }

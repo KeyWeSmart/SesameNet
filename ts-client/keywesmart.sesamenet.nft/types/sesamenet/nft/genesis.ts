@@ -2,7 +2,7 @@
 import _m0 from "protobufjs/minimal";
 import { Collection } from "./nft";
 
-export const protobufPackage = "sesamenet.nft";
+export const protobufPackage = "keywesmart.sesamenet.nft";
 
 /** GenesisState defines the nft module's genesis state. */
 export interface GenesisState {

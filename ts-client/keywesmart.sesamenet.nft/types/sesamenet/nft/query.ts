@@ -5,7 +5,7 @@ import { PageRequest, PageResponse } from "../../cosmos/base/query/v1beta1/pagin
 import { BaseNFT, Owner, QueryCollection, QueryDenom } from "./nft";
 import { Params } from "./params";
 
-export const protobufPackage = "sesamenet.nft";
+export const protobufPackage = "keywesmart.sesamenet.nft";
 
 /** QueryParamsRequest is request type for the Query/Params RPC method. */
 export interface QueryParamsRequest {
@@ -1279,61 +1279,61 @@ export class QueryClientImpl implements Query {
   }
   Params(request: QueryParamsRequest): Promise<QueryParamsResponse> {
     const data = QueryParamsRequest.encode(request).finish();
-    const promise = this.rpc.request("sesamenet.nft.Query", "Params", data);
+    const promise = this.rpc.request("keywesmart.sesamenet.nft.Query", "Params", data);
     return promise.then((data) => QueryParamsResponse.decode(new _m0.Reader(data)));
   }
 
   Supply(request: QuerySupplyRequest): Promise<QuerySupplyResponse> {
     const data = QuerySupplyRequest.encode(request).finish();
-    const promise = this.rpc.request("sesamenet.nft.Query", "Supply", data);
+    const promise = this.rpc.request("keywesmart.sesamenet.nft.Query", "Supply", data);
     return promise.then((data) => QuerySupplyResponse.decode(new _m0.Reader(data)));
   }
 
   Owner(request: QueryOwnerRequest): Promise<QueryOwnerResponse> {
     const data = QueryOwnerRequest.encode(request).finish();
-    const promise = this.rpc.request("sesamenet.nft.Query", "Owner", data);
+    const promise = this.rpc.request("keywesmart.sesamenet.nft.Query", "Owner", data);
     return promise.then((data) => QueryOwnerResponse.decode(new _m0.Reader(data)));
   }
 
   Collection(request: QueryCollectionRequest): Promise<QueryCollectionResponse> {
     const data = QueryCollectionRequest.encode(request).finish();
-    const promise = this.rpc.request("sesamenet.nft.Query", "Collection", data);
+    const promise = this.rpc.request("keywesmart.sesamenet.nft.Query", "Collection", data);
     return promise.then((data) => QueryCollectionResponse.decode(new _m0.Reader(data)));
   }
 
   Denom(request: QueryDenomRequest): Promise<QueryDenomResponse> {
     const data = QueryDenomRequest.encode(request).finish();
-    const promise = this.rpc.request("sesamenet.nft.Query", "Denom", data);
+    const promise = this.rpc.request("keywesmart.sesamenet.nft.Query", "Denom", data);
     return promise.then((data) => QueryDenomResponse.decode(new _m0.Reader(data)));
   }
 
   DenomByName(request: QueryDenomByNameRequest): Promise<QueryDenomByNameResponse> {
     const data = QueryDenomByNameRequest.encode(request).finish();
-    const promise = this.rpc.request("sesamenet.nft.Query", "DenomByName", data);
+    const promise = this.rpc.request("keywesmart.sesamenet.nft.Query", "DenomByName", data);
     return promise.then((data) => QueryDenomByNameResponse.decode(new _m0.Reader(data)));
   }
 
   Denoms(request: QueryDenomsRequest): Promise<QueryDenomsResponse> {
     const data = QueryDenomsRequest.encode(request).finish();
-    const promise = this.rpc.request("sesamenet.nft.Query", "Denoms", data);
+    const promise = this.rpc.request("keywesmart.sesamenet.nft.Query", "Denoms", data);
     return promise.then((data) => QueryDenomsResponse.decode(new _m0.Reader(data)));
   }
 
   NFT(request: QueryNFTRequest): Promise<QueryNFTResponse> {
     const data = QueryNFTRequest.encode(request).finish();
-    const promise = this.rpc.request("sesamenet.nft.Query", "NFT", data);
+    const promise = this.rpc.request("keywesmart.sesamenet.nft.Query", "NFT", data);
     return promise.then((data) => QueryNFTResponse.decode(new _m0.Reader(data)));
   }
 
   DenomsOfAddress(request: QueryDenomsOfAddressRequest): Promise<QueryDenomsOfAddressResponse> {
     const data = QueryDenomsOfAddressRequest.encode(request).finish();
-    const promise = this.rpc.request("sesamenet.nft.Query", "DenomsOfAddress", data);
+    const promise = this.rpc.request("keywesmart.sesamenet.nft.Query", "DenomsOfAddress", data);
     return promise.then((data) => QueryDenomsOfAddressResponse.decode(new _m0.Reader(data)));
   }
 
   DenomsAccessMap(request: QueryDenomsAccessMapRequest): Promise<QueryDenomsAccessMapResponse> {
     const data = QueryDenomsAccessMapRequest.encode(request).finish();
-    const promise = this.rpc.request("sesamenet.nft.Query", "DenomsAccessMap", data);
+    const promise = this.rpc.request("keywesmart.sesamenet.nft.Query", "DenomsAccessMap", data);
     return promise.then((data) => QueryDenomsAccessMapResponse.decode(new _m0.Reader(data)));
   }
 }
