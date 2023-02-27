@@ -92,10 +92,10 @@ func (k Keeper) GetDenoms(ctx sdk.Context) (denoms []types.Denom) {
 
 // IsDenomOwner checks if address is the owner of Denom
 // Return the Denom if true, an error otherwise
-func (k Keeper) IsDenomOwner(ctx sdk.Context, denomID string, address sdk.AccAddress) (types.Denom, error) {
+func (k Keeper) IsDenomOwner(ctx sdk.Context, denomID string, address sdk.AccAddress) (types.Denom, error, bool) {
 	denom, err := k.GetDenom(ctx, denomID)
 	if err != nil {
-		return types.Denom{}, err
+		return types.Denom{}, err, false
 	}
 
 	owner, err := sdk.AccAddressFromBech32(denom.Owner)
@@ -104,10 +104,10 @@ func (k Keeper) IsDenomOwner(ctx sdk.Context, denomID string, address sdk.AccAdd
 	}
 
 	if !owner.Equals(address) {
-		return types.Denom{}, sdkerrors.Wrapf(types.ErrUnauthorized, "%s is not the owner of %s", address, denomID)
+		return types.Denom{}, nil, false
 	}
 
-	return denom, nil
+	return denom, nil, true
 }
 
 // IssueDenom issues a denom according to the given params

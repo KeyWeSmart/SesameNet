@@ -49152,6 +49152,8 @@ definitions:
     type: object
   keywesmart.sesamenet.nft.MsgMintNFTResponse:
     type: object
+  keywesmart.sesamenet.nft.MsgTransferNFTResponse:
+    type: object
   keywesmart.sesamenet.nft.Params:
     type: object
     description: Params defines the parameters for the module.

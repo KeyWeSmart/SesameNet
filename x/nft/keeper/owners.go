@@ -3,6 +3,7 @@ package keeper
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 
+	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 	"github.com/keywesmart/sesamenet/x/nft/types"
 )
 
@@ -97,4 +98,38 @@ func (k Keeper) swapOwner(ctx sdk.Context, denomID, tokenID string, srcOwner, ds
 
 	// set new owner key
 	k.setOwner(ctx, denomID, tokenID, dstOwner)
+}
+
+// TransferOwner transfers the ownership of the given NFT to the new owner
+func (k Keeper) TransferOwner(
+	ctx sdk.Context, denomID, tokenID string, srcOwner, dstOwner sdk.AccAddress,
+) error {
+	if !k.HasDenomID(ctx, denomID) {
+		return sdkerrors.Wrapf(types.ErrInvalidDenom, "denom ID %s not exists", denomID)
+	}
+
+	if !k.HasNFT(ctx, denomID, tokenID) {
+		return sdkerrors.Wrapf(types.ErrInvalidNFT, "NFT ID %s not exists", tokenID)
+	}
+
+	// sender must be NFT owner or Denom owner
+	nft, err, isNFTOwner := k.IsOwner(ctx, denomID, tokenID, srcOwner)
+	if err != nil {
+		return err
+	}
+
+	_, err, isDenomOwner := k.IsDenomOwner(ctx, denomID, srcOwner)
+	if err != nil {
+		return err
+	}
+
+	if !isDenomOwner && !isNFTOwner {
+		return sdkerrors.Wrapf(types.ErrUnauthorized, "Sender is not either Denomination owner or NFT owner: %s", srcOwner)
+	}
+
+	nft.Owner = dstOwner.String()
+
+	k.setNFT(ctx, denomID, nft)
+	k.swapOwner(ctx, denomID, tokenID, srcOwner, dstOwner)
+	return nil
 }
