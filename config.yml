@@ -1,16 +1,49 @@
+version: 1
 accounts:
   - name: alice
-    coins: ["20000token", "200000000stake"]
+    coins: ["10000000ssc"]
+    mnemonic: "tower palace learn calm lemon nothing shine require abandon garlic scout away muscle ahead find crime armor result useless need adult truth donate harsh"
   - name: bob
-    coins: ["10000token", "100000000stake"]
+    coins: ["10000000ssc"]
+    mnemonic: "upon cabin chaos bracket enter grace sea tool relax diet reduce space domain room carbon pumpkin answer treat combine few great govern hungry category"
+  - name: validator
+    coins: ["10000000ssc"]
+    mnemonic: "agent maple rhythm female note quiz drastic already margin barrel illness ask pledge avoid peanut essay spice harbor tag wire tribe mirror jacket eager"
 validator:
-  name: alice
-  staked: "100000000stake"
+    name: validator
+    staked: "5000000ssc"
 client:
   openapi:
     path: "docs/static/openapi.yml"
-  vuex:
-    path: "vue/src/store"
+  typescript:
+    path: "ts-client"
+build:
+  binary: "sesame"
+  main: "./cmd/sesamenetd"
 faucet:
   name: bob
-  coins: ["5token", "100000stake"]
+  coins: ["100000ssc"]
+init:
+  client:
+    chain-id: "SesameNet"
+  app:
+    min_gas_prices: "1000ssc"
+genesis:
+  chain_id: "SesameNet"
+  app_state:
+    staking:
+      params:
+        bond_denom: "ssc"
+    crisis:
+      constant_fee:
+        denom: "ssc"
+    gov:
+      deposit_params:
+        min_deposit:
+          - amount: "1000"
+            denom: "ssc"
+      voting_params:
+        voting_period: "100s"
+    mint:
+      params:
+        mint_denom: "ssc"
