@@ -30,12 +30,44 @@ func GetTxCmd() *cobra.Command {
 		RunE:                       client.ValidateCmd,
 	}
 
-	cmd.AddCommand(CmdIssueDenom())
-	cmd.AddCommand(CmdMintNFT())
-	cmd.AddCommand(CmdEditNFT())
-	cmd.AddCommand(CmdTransferNFT())
-	cmd.AddCommand(CmdBurnNFT())
+	cmd.AddCommand(
+		GetDenomTxCmd(),
+		GetTokenTxCmd(),
+	)
 	// this line is used by starport scaffolding # 1
+
+	return cmd
+}
+
+func GetDenomTxCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:                        "denom",
+		Short:                      "All subcommands for denomination transaction of NFT module",
+		DisableFlagParsing:         true,
+		SuggestionsMinimumDistance: 2,
+		RunE:                       client.ValidateCmd,
+	}
+
+	cmd.AddCommand(CmdIssueDenom())
+
+	return cmd
+}
+
+func GetTokenTxCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:                        "token",
+		Short:                      "All subcommands for token transaction of NFT module",
+		DisableFlagParsing:         true,
+		SuggestionsMinimumDistance: 2,
+		RunE:                       client.ValidateCmd,
+	}
+
+	cmd.AddCommand(
+		CmdMintNFT(),
+		CmdEditNFT(),
+		CmdTransferNFT(),
+		CmdBurnNFT(),
+	)
 
 	return cmd
 }

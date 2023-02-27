@@ -18,7 +18,7 @@ func CmdOwner() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:     "owner [address]",
 		Short:   "Get the NFTs owned by an account address",
-		Example: fmt.Sprintf("$ %s query nft owner <address> --denom-id=<denom-id>", types.BinaryName),
+		Example: fmt.Sprintf("$ %s query nft token owner <address> --denom-id=<denom-id>", types.BinaryName),
 		Args:    cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			clientCtx, err := client.GetClientQueryContext(cmd)

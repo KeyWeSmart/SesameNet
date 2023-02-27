@@ -11,7 +11,6 @@ import (
 	"github.com/cosmos/cosmos-sdk/client/flags"
 	"github.com/cosmos/cosmos-sdk/client/tx"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"github.com/cosmos/cosmos-sdk/version"
 	"github.com/spf13/cobra"
 )
 
@@ -23,13 +22,13 @@ func CmdMintNFT() *cobra.Command {
 		Short: "Mint new NFT",
 		Long:  "Mint an NFT and set the owner to the recipient.",
 		Example: fmt.Sprintf(
-			"$ %s tx nft mint <denom-id> <token-id> "+
+			"$ %s tx nft token mint <denom-id> <token-id> "+
 				"--uri=<uri> "+
 				"--recipient=<recipient> "+
-				"--from=<key-name> "+
-				"--chain-id=<chain-id> "+
-				"--fees=<fee>",
-			version.Name,
+				"--name=<token-name> "+
+				"--data=<token-metadata> "+
+				"--from=<key-name>",
+			types.BinaryName,
 		),
 		Args: cobra.ExactArgs(2),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {

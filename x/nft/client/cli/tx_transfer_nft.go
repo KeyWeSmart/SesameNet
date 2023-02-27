@@ -20,11 +20,8 @@ func CmdTransferNFT() *cobra.Command {
 		Use:   "transfer [recipient] [denom-id] [token-id]",
 		Short: "Transfer an NFT to a recipient",
 		Example: fmt.Sprintf(
-			"$ %s tx nft transfer <recipient> <denom-id> <token-id> "+
-				"--from=<key-name> "+
-				"--chain-id=<chain-id> "+
-				"--fees=<fee>",
-			"sesame",
+			"$ %s tx nft token transfer <recipient> <denom-id> <token-id> --from=<key-name>",
+			types.BinaryName,
 		),
 		Args: cobra.ExactArgs(3),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {

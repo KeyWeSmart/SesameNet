@@ -15,9 +15,9 @@ var _ = strconv.Itoa(0)
 
 func CmdDenomByName() *cobra.Command {
 	cmd := &cobra.Command{
-		Use:     "denom-by-name [denom-name]",
-		Long:    "Query the denom by the specified denom name.",
-		Example: fmt.Sprintf("$ %s query nft denom <denom-name>", types.BinaryName),
+		Use:     "name [denom-name]",
+		Short:   "Query the denom by the specified denom name.",
+		Example: fmt.Sprintf("$ %s query nft denom name <denom-name>", types.BinaryName),
 		Args:    cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) (err error) {
 			clientCtx, err := client.GetClientQueryContext(cmd)

@@ -19,10 +19,7 @@ func CmdBurnNFT() *cobra.Command {
 		Use:   "burn [denom-id] [token-id]",
 		Short: "Burn a NFT",
 		Example: fmt.Sprintf(
-			"$ %s tx nft burn <denom-id> <token-id> "+
-				"--from=<key-name> "+
-				"--chain-id=<chain-id> "+
-				"--fees=<fee>",
+			"$ %s tx nft token burn <denom-id> <token-id> --from=<key-name>",
 			types.BinaryName,
 		),
 		Args: cobra.ExactArgs(2),
