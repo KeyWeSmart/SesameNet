@@ -29632,6 +29632,59 @@ paths:
           type: string
       tags:
         - Query
+  '/sesamenet/nft/nfts/{denom_id}/{token_id}':
+    get:
+      summary: Queries a list of NFT items.
+      operationId: KeywesmartSesamenetNftNFT
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            type: object
+            properties:
+              nft:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  uri:
+                    type: string
+                  data:
+                    type: string
+                  owner:
+                    type: string
+                title: BaseNFT defines a non-fungible token
+        default:
+          description: An unexpected error response.
+          schema:
+            type: object
+            properties:
+              code:
+                type: integer
+                format: int32
+              message:
+                type: string
+              details:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    '@type':
+                      type: string
+                  additionalProperties: {}
+      parameters:
+        - name: denom_id
+          in: path
+          required: true
+          type: string
+        - name: token_id
+          in: path
+          required: true
+          type: string
+      tags:
+        - Query
   '/sesamenet/nft/nfts/{owner}':
     get:
       summary: Queries a list of Owner items.
@@ -49974,6 +50027,23 @@ definitions:
                    repeated Bar results = 1;
                    PageResponse page = 2;
            }
+  keywesmart.sesamenet.nft.QueryNFTResponse:
+    type: object
+    properties:
+      nft:
+        type: object
+        properties:
+          id:
+            type: string
+          name:
+            type: string
+          uri:
+            type: string
+          data:
+            type: string
+          owner:
+            type: string
+        title: BaseNFT defines a non-fungible token
   keywesmart.sesamenet.nft.QueryOwnerResponse:
     type: object
     properties:

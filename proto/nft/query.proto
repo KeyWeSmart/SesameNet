@@ -40,6 +40,11 @@ service Query {
 	rpc Denoms(QueryDenomsRequest) returns (QueryDenomsResponse) {
 		option (google.api.http).get = "/sesamenet/nft/denoms";
 	}
+  // Queries a list of NFT items.
+	rpc NFT(QueryNFTRequest) returns (QueryNFTResponse) {
+		option (google.api.http).get = "/sesamenet/nft/nfts/{denom_id}/{token_id}";
+	}
+
 
 // this line is used by starport scaffolding # 2
 }
@@ -107,6 +112,15 @@ message QueryDenomsRequest {
 message QueryDenomsResponse {
   repeated QueryDenom denoms = 1 [(gogoproto.nullable) = false];
   cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryNFTRequest {
+  string denom_id = 1 [(gogoproto.moretags) = "yaml:\"denom_id\""];
+  string token_id = 2 [(gogoproto.moretags) = "yaml:\"token_id\""];
+}
+
+message QueryNFTResponse {
+  BaseNFT nft = 1 [(gogoproto.customname) = "NFT"];
 }
 
 // this line is used by starport scaffolding # 3
