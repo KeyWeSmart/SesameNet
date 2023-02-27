@@ -49148,6 +49148,8 @@ definitions:
       the connection handshake.
   keywesmart.sesamenet.nft.MsgIssueDenomResponse:
     type: object
+  keywesmart.sesamenet.nft.MsgMintNFTResponse:
+    type: object
   keywesmart.sesamenet.nft.Params:
     type: object
     description: Params defines the parameters for the module.

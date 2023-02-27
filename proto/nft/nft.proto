@@ -30,7 +30,7 @@ message Denom {
   string uri     = 5;
 
   // This field represent all device (nft) that can access to this doorlock (denom)
-  map<string, bool> access_list = 6;
+  map<string, bool> access_map = 6;
 }
 
 // IDCollection defines a type of collection with specified ID

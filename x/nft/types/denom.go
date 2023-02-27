@@ -5,13 +5,13 @@ import (
 )
 
 // NewDenom return a new denom
-func NewDenom(id, name, schema string, uri string, owner sdk.AccAddress, accessList map[string]bool) Denom {
+func NewDenom(id, name, schema string, uri string, owner sdk.AccAddress, accessMap map[string]bool) Denom {
 	return Denom{
-		Id:         id,
-		Name:       name,
-		Schema:     schema,
-		Owner:      owner.String(),
-		Uri:        uri,
-		AccessList: accessList,
+		Id:        id,
+		Name:      name,
+		Schema:    schema,
+		Owner:     owner.String(),
+		Uri:       uri,
+		AccessMap: accessMap,
 	}
 }
