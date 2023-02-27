@@ -40,6 +40,10 @@ const (
 	// TODO: Determine the simulation weight value
 	defaultWeightMsgTransferNFT int = 100
 
+	opWeightMsgBurnNFT = "op_weight_msg_burn_nft"
+	// TODO: Determine the simulation weight value
+	defaultWeightMsgBurnNFT int = 100
+
 	// this line is used by starport scaffolding # simapp/module/const
 )
 
@@ -115,6 +119,17 @@ func (am AppModule) WeightedOperations(simState module.SimulationState) []simtyp
 	operations = append(operations, simulation.NewWeightedOperation(
 		weightMsgTransferNFT,
 		nftsimulation.SimulateMsgTransferNFT(am.accountKeeper, am.bankKeeper, am.keeper),
+	))
+
+	var weightMsgBurnNFT int
+	simState.AppParams.GetOrGenerate(simState.Cdc, opWeightMsgBurnNFT, &weightMsgBurnNFT, nil,
+		func(_ *rand.Rand) {
+			weightMsgBurnNFT = defaultWeightMsgBurnNFT
+		},
+	)
+	operations = append(operations, simulation.NewWeightedOperation(
+		weightMsgBurnNFT,
+		nftsimulation.SimulateMsgBurnNFT(am.accountKeeper, am.bankKeeper, am.keeper),
 	))
 
 	// this line is used by starport scaffolding # simapp/module/operation

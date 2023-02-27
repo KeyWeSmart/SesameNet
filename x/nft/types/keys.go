@@ -22,6 +22,8 @@ const (
 
 	// MemStoreKey defines the in-memory store key
 	MemStoreKey = "mem_nft"
+
+	BinaryName = "sesame"
 )
 
 var (

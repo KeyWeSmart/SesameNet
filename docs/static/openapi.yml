@@ -49146,6 +49146,8 @@ definitions:
     description: |-
       Version defines the versioning scheme used to negotiate the IBC verison in
       the connection handshake.
+  keywesmart.sesamenet.nft.MsgBurnNFTResponse:
+    type: object
   keywesmart.sesamenet.nft.MsgEditNFTResponse:
     type: object
   keywesmart.sesamenet.nft.MsgIssueDenomResponse:
