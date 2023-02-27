@@ -111,3 +111,39 @@ func (k Keeper) MintNFTUnverified(ctx sdk.Context, denomID, tokenID, tokenNm, to
 
 	return nil
 }
+
+// EditNFT updates an already existing NFT
+func (k Keeper) EditNFT(
+	ctx sdk.Context, denomID, tokenID, tokenNm,
+	tokenURI, tokenData string, owner sdk.AccAddress,
+) error {
+	if !k.HasDenomID(ctx, denomID) {
+		return sdkerrors.Wrapf(types.ErrInvalidDenom, "denom ID %s not exists", denomID)
+	}
+
+	nft, err := k.IsOwner(ctx, denomID, tokenID, owner)
+	if err != nil {
+		return err
+	}
+
+	_, err = k.IsDenomOwner(ctx, denomID, owner)
+	if err != nil {
+		return err
+	}
+
+	if types.Modified(tokenNm) {
+		nft.Name = tokenNm
+	}
+
+	if types.Modified(tokenURI) {
+		nft.URI = tokenURI
+	}
+
+	if types.Modified(tokenData) {
+		nft.Data = tokenData
+	}
+
+	k.setNFT(ctx, denomID, nft)
+
+	return nil
+}
