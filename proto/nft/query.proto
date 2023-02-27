@@ -44,6 +44,10 @@ service Query {
 	rpc NFT(QueryNFTRequest) returns (QueryNFTResponse) {
 		option (google.api.http).get = "/sesamenet/nft/nfts/{denom_id}/{token_id}";
 	}
+  // Queries a list of DenomsOfAddress items.
+	rpc DenomsOfAddress(QueryDenomsOfAddressRequest) returns (QueryDenomsOfAddressResponse) {
+		option (google.api.http).get = "/sesamenet/nft/denoms/{address}";
+	}
 
 
 // this line is used by starport scaffolding # 2
@@ -121,6 +125,14 @@ message QueryNFTRequest {
 
 message QueryNFTResponse {
   BaseNFT nft = 1 [(gogoproto.customname) = "NFT"];
+}
+
+message QueryDenomsOfAddressRequest {
+  string address = 1;
+}
+
+message QueryDenomsOfAddressResponse {
+  repeated QueryDenom denoms = 1 [(gogoproto.nullable) = false];
 }
 
 // this line is used by starport scaffolding # 3
