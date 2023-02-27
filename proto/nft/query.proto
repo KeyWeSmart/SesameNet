@@ -36,6 +36,10 @@ service Query {
 	rpc DenomByName(QueryDenomByNameRequest) returns (QueryDenomByNameResponse) {
 		option (google.api.http).get = "/sesamenet/nft/denoms/{denom_name}";
 	}
+  // Queries a list of Denoms items.
+	rpc Denoms(QueryDenomsRequest) returns (QueryDenomsResponse) {
+		option (google.api.http).get = "/sesamenet/nft/denoms";
+	}
 
 // this line is used by starport scaffolding # 2
 }
@@ -94,6 +98,15 @@ message QueryDenomByNameRequest {
 
 message QueryDenomByNameResponse {
   QueryDenom denom = 1;
+}
+
+message QueryDenomsRequest {
+  cosmos.base.query.v1beta1.PageRequest pagination = 1;
+}
+
+message QueryDenomsResponse {
+  repeated QueryDenom denoms = 1 [(gogoproto.nullable) = false];
+  cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 
 // this line is used by starport scaffolding # 3
