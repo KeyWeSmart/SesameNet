@@ -1,13 +1,11 @@
 package keeper
 
 import (
-	"crypto/sha256"
-	"encoding/hex"
-
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
 
 	"github.com/keywesmart/sesamenet/x/nft/types"
+	"github.com/keywesmart/sesamenet/x/utils"
 )
 
 // HasDenomID returns whether the specified denom ID exists
@@ -147,13 +145,10 @@ func (k Keeper) RemoveAccessMap(ctx sdk.Context, denomID, tokenID string) error 
 		// map empty, nothing to remove
 		return sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "This access map is empty")
 	} else {
-		h := sha256.New()
-		h.Write([]byte(tokenID))
-		bs := h.Sum(nil)
-		hashTokenID := hex.EncodeToString(bs)
+		hashResult := utils.CreateAccessMapTokenHash(denomID, tokenID)
 
-		if denom.AccessMap[hashTokenID] {
-			delete(denom.AccessMap, hashTokenID)
+		if denom.AccessMap[hashResult] {
+			delete(denom.AccessMap, hashResult)
 			k.UpdateDenom(ctx, denom)
 		} else {
 			return sdkerrors.Wrap(sdkerrors.ErrInvalidRequest, "Token ID hash is not found in this access map")

@@ -2,10 +2,9 @@ package keeper
 
 import (
 	"context"
-	"crypto/sha256"
-	"encoding/hex"
 
 	"github.com/keywesmart/sesamenet/x/nft/types"
+	"github.com/keywesmart/sesamenet/x/utils"
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
@@ -35,13 +34,10 @@ func (k msgServer) MintNFT(goCtx context.Context, msg *types.MsgMintNFT) (*types
 	}
 
 	// SHA256 hash the NFT name for denom access control map
-	h := sha256.New()
-	h.Write([]byte(msg.Id))
-	bs := h.Sum(nil)
-	hashTokenID := hex.EncodeToString(bs)
+	hashResult := utils.CreateAccessMapTokenHash(msg.DenomId, msg.Id)
 
 	// update denomination access control map
-	if err := k.Keeper.UpdateDenomAccessMap(ctx, msg.DenomId, hashTokenID); err != nil {
+	if err := k.Keeper.UpdateDenomAccessMap(ctx, msg.DenomId, hashResult); err != nil {
 		return nil, err
 	}
 
@@ -56,7 +52,7 @@ func (k msgServer) MintNFT(goCtx context.Context, msg *types.MsgMintNFT) (*types
 		sdk.NewEvent(
 			types.EventTypeUpdateDenomAccessMap,
 			sdk.NewAttribute(types.AttributeKeyDenomID, msg.DenomId),
-			sdk.NewAttribute(types.AttributeKeyDenomAccessMap, hashTokenID),
+			sdk.NewAttribute(types.AttributeKeyDenomAccessMap, hashResult),
 		),
 		sdk.NewEvent(
 			sdk.EventTypeMessage,
