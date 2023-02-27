@@ -5,8 +5,8 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	"sesamenet/x/nft/keeper"
-	"sesamenet/x/nft/types"
+	"github.com/keywesmart/sesamenet/x/nft/keeper"
+	"github.com/keywesmart/sesamenet/x/nft/types"
 )
 
 // NewHandler ...

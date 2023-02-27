@@ -9,9 +9,9 @@ import (
 	"github.com/cosmos/cosmos-sdk/types/module"
 	simtypes "github.com/cosmos/cosmos-sdk/types/simulation"
 	"github.com/cosmos/cosmos-sdk/x/simulation"
-	"sesamenet/testutil/sample"
-	nftsimulation "sesamenet/x/nft/simulation"
-	"sesamenet/x/nft/types"
+	"github.com/keywesmart/sesamenet/testutil/sample"
+	nftsimulation "github.com/keywesmart/sesamenet/x/nft/simulation"
+	"github.com/keywesmart/sesamenet/x/nft/types"
 )
 
 // avoid unused import issue

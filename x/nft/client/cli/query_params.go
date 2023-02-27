@@ -5,8 +5,8 @@ import (
 
 	"github.com/cosmos/cosmos-sdk/client"
 	"github.com/cosmos/cosmos-sdk/client/flags"
+	"github.com/keywesmart/sesamenet/x/nft/types"
 	"github.com/spf13/cobra"
-	"sesamenet/x/nft/types"
 )
 
 func CmdQueryParams() *cobra.Command {

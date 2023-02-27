@@ -1,5 +1,5 @@
 syntax = "proto3";
-package sesamenet.nft;
+package keywesmart.sesamenet.nft;
 
 import "gogoproto/gogo.proto";
 import "google/api/annotations.proto";
@@ -7,7 +7,7 @@ import "cosmos/base/query/v1beta1/pagination.proto";
 import "nft/params.proto";
 // this line is used by starport scaffolding # 1
 
-option go_package = "sesamenet/x/nft/types";
+option go_package = "github.com/keywesmart/sesamenet/x/nft/types";
 
 // Query defines the gRPC querier service.
 service Query {

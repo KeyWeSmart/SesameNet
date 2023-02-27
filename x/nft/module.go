@@ -16,9 +16,9 @@ import (
 	cdctypes "github.com/cosmos/cosmos-sdk/codec/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	"github.com/cosmos/cosmos-sdk/types/module"
-	"sesamenet/x/nft/client/cli"
-	"sesamenet/x/nft/keeper"
-	"sesamenet/x/nft/types"
+	"github.com/keywesmart/sesamenet/x/nft/client/cli"
+	"github.com/keywesmart/sesamenet/x/nft/keeper"
+	"github.com/keywesmart/sesamenet/x/nft/types"
 )
 
 var (

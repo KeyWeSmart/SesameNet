@@ -3,11 +3,11 @@ package nft_test
 import (
 	"testing"
 
+	keepertest "github.com/keywesmart/sesamenet/testutil/keeper"
+	"github.com/keywesmart/sesamenet/testutil/nullify"
+	"github.com/keywesmart/sesamenet/x/nft"
+	"github.com/keywesmart/sesamenet/x/nft/types"
 	"github.com/stretchr/testify/require"
-	keepertest "sesamenet/testutil/keeper"
-	"sesamenet/testutil/nullify"
-	"sesamenet/x/nft"
-	"sesamenet/x/nft/types"
 )
 
 func TestGenesis(t *testing.T) {

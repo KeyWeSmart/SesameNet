@@ -29202,7 +29202,7 @@ paths:
   /sesamenet/nft/params:
     get:
       summary: Parameters queries the parameters of the module.
-      operationId: SesamenetNftParams
+      operationId: KeywesmartSesamenetNftParams
       responses:
         '200':
           description: A successful response.
@@ -49146,10 +49146,10 @@ definitions:
     description: |-
       Version defines the versioning scheme used to negotiate the IBC verison in
       the connection handshake.
-  sesamenet.nft.Params:
+  keywesmart.sesamenet.nft.Params:
     type: object
     description: Params defines the parameters for the module.
-  sesamenet.nft.QueryParamsResponse:
+  keywesmart.sesamenet.nft.QueryParamsResponse:
     type: object
     properties:
       params:

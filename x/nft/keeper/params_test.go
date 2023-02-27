@@ -3,9 +3,9 @@ package keeper_test
 import (
 	"testing"
 
+	testkeeper "github.com/keywesmart/sesamenet/testutil/keeper"
+	"github.com/keywesmart/sesamenet/x/nft/types"
 	"github.com/stretchr/testify/require"
-	testkeeper "sesamenet/testutil/keeper"
-	"sesamenet/x/nft/types"
 )
 
 func TestGetParams(t *testing.T) {

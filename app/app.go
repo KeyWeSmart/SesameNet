@@ -98,10 +98,10 @@ import (
 	monitoringpkeeper "github.com/tendermint/spn/x/monitoringp/keeper"
 	monitoringptypes "github.com/tendermint/spn/x/monitoringp/types"
 
-	"sesamenet/docs"
-	nftmodule "sesamenet/x/nft"
-	nftmodulekeeper "sesamenet/x/nft/keeper"
-	nftmoduletypes "sesamenet/x/nft/types"
+	"github.com/keywesmart/sesamenet/docs"
+	nftmodule "github.com/keywesmart/sesamenet/x/nft"
+	nftmodulekeeper "github.com/keywesmart/sesamenet/x/nft/keeper"
+	nftmoduletypes "github.com/keywesmart/sesamenet/x/nft/types"
 	// this line is used by starport scaffolding # stargate/app/moduleImport
 )
 

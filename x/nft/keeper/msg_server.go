@@ -1,7 +1,7 @@
 package keeper
 
 import (
-	"sesamenet/x/nft/types"
+	"github.com/keywesmart/sesamenet/x/nft/types"
 )
 
 type msgServer struct {

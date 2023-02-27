@@ -1,4 +1,4 @@
-module sesamenet
+module github.com/keywesmart/sesamenet
 
 go 1.18
 

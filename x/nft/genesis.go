@@ -2,8 +2,8 @@ package nft
 
 import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	"sesamenet/x/nft/keeper"
-	"sesamenet/x/nft/types"
+	"github.com/keywesmart/sesamenet/x/nft/keeper"
+	"github.com/keywesmart/sesamenet/x/nft/types"
 )
 
 // InitGenesis initializes the capability module's state from a provided genesis

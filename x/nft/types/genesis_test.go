@@ -3,8 +3,8 @@ package types_test
 import (
 	"testing"
 
+	"github.com/keywesmart/sesamenet/x/nft/types"
 	"github.com/stretchr/testify/require"
-	"sesamenet/x/nft/types"
 )
 
 func TestGenesisState_Validate(t *testing.T) {
