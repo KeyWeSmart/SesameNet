@@ -51,7 +51,7 @@ func ValidateDenomIDWithIBC(denomID string) error {
 func ValidateDenomName(denomName string) error {
 	denomName = strings.TrimSpace(denomName)
 	if len(denomName) == 0 {
-		return sdkerrors.Wrapf(ErrInvalidDenomName, "denom name(%s) can not be space", denomName)
+		return sdkerrors.Wrapf(ErrInvalidDenomName, "denom name can not be empty")
 	}
 	return nil
 }
