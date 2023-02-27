@@ -1,0 +1,13 @@
+syntax = "proto3";
+package sesamenet.nft;
+
+option go_package = "sesamenet/x/nft/types";
+
+message NFT {
+  
+  string classId = 1; 
+  string uri = 2; 
+  string uriHash = 3; 
+  string data = 4; 
+  string accessList = 5; 
+}
