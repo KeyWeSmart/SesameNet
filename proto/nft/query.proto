@@ -48,7 +48,10 @@ service Query {
 	rpc DenomsOfAddress(QueryDenomsOfAddressRequest) returns (QueryDenomsOfAddressResponse) {
 		option (google.api.http).get = "/sesamenet/nft/denoms/{address}";
 	}
-
+  // Queries a list of DenomsAccessMap items.
+  rpc DenomsAccessMap(QueryDenomsAccessMapRequest) returns (QueryDenomsAccessMapResponse) {
+    option (google.api.http).get = "/sesamenet/nft/access-map/{denom_id}";
+  }
 
 // this line is used by starport scaffolding # 2
 }
@@ -133,6 +136,14 @@ message QueryDenomsOfAddressRequest {
 
 message QueryDenomsOfAddressResponse {
   repeated QueryDenom denoms = 1 [(gogoproto.nullable) = false];
+}
+
+message QueryDenomsAccessMapRequest {
+  string denom_id = 1 [(gogoproto.moretags) = "yaml:\"denom_id\""];
+}
+
+message QueryDenomsAccessMapResponse {
+  map<string, bool> access_map = 6;
 }
 
 // this line is used by starport scaffolding # 3
