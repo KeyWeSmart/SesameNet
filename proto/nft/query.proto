@@ -24,6 +24,10 @@ service Query {
 	rpc Owner(QueryOwnerRequest) returns (QueryOwnerResponse) {
 		option (google.api.http).get = "/sesamenet/nft/nfts/{owner}";
 	}
+  // Queries a list of Collection items.
+	rpc Collection(QueryCollectionRequest) returns (QueryCollectionResponse) {
+		option (google.api.http).get = "/sesamenet/nft/collections/{denom_id}";
+	}
 
 // this line is used by starport scaffolding # 2
 }
@@ -55,6 +59,16 @@ message QueryOwnerRequest {
 
 message QueryOwnerResponse {
   Owner owner = 1;
+  cosmos.base.query.v1beta1.PageResponse pagination = 2;
+}
+
+message QueryCollectionRequest {
+  string denom_id = 1  [(gogoproto.moretags) = "yaml:\"denom_id\""];
+  cosmos.base.query.v1beta1.PageRequest pagination = 2;
+}
+
+message QueryCollectionResponse {
+  QueryCollection collection = 1;
   cosmos.base.query.v1beta1.PageResponse pagination = 2;
 }
 

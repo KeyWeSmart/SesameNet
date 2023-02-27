@@ -1,9 +1,14 @@
 package keeper
 
 import (
+	"github.com/cosmos/cosmos-sdk/store/prefix"
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
+	"github.com/cosmos/cosmos-sdk/types/query"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 
+	"github.com/keywesmart/sesamenet/x/nft/exported"
 	"github.com/keywesmart/sesamenet/x/nft/types"
 )
 
@@ -108,4 +113,27 @@ func (k Keeper) decreaseSupply(ctx sdk.Context, denomID string) {
 
 	bz := types.MustMarshalSupply(k.cdc, supply)
 	store.Set(types.KeyCollection(denomID), bz)
+}
+
+// GetPaginateCollection returns the collection by the specified denom ID
+func (k Keeper) GetPaginateCollection(ctx sdk.Context, request *types.QueryCollectionRequest, denomID string) (types.QueryCollection, *query.PageResponse, error) {
+	denom, err := k.GetDenom(ctx, denomID)
+	if err != nil {
+		return types.QueryCollection{}, nil, sdkerrors.Wrapf(types.ErrInvalidDenom, "denomID %s not existed ", denomID)
+	}
+
+	var nfts []exported.NFT
+	store := ctx.KVStore(k.storeKey)
+	nftStore := prefix.NewStore(store, types.KeyNFT(denomID, ""))
+	pageRes, err := query.Paginate(nftStore, request.Pagination, func(key []byte, value []byte) error {
+		var baseNFT types.BaseNFT
+		k.cdc.MustUnmarshal(value, &baseNFT)
+		nfts = append(nfts, baseNFT)
+		return nil
+	})
+	if err != nil {
+		return types.QueryCollection{}, nil, status.Errorf(codes.InvalidArgument, "paginate: %v", err)
+	}
+
+	return types.NewQueryCollection(types.ConvertDenomToQueryDenom(denom), nfts), pageRes, nil
 }
