@@ -29567,7 +29567,7 @@ paths:
           type: boolean
       tags:
         - Query
-  '/sesamenet/nft/denoms/{address}':
+  '/sesamenet/nft/denoms/address/{address}':
     get:
       summary: Queries a list of DenomsOfAddress items.
       operationId: KeywesmartSesamenetNftDenomsOfAddress
@@ -29621,7 +29621,7 @@ paths:
           type: string
       tags:
         - Query
-  '/sesamenet/nft/denoms/{denom_id}':
+  '/sesamenet/nft/denoms/id/{denom_id}':
     get:
       summary: Queries a list of Denom items.
       operationId: KeywesmartSesamenetNftDenom
@@ -29673,7 +29673,7 @@ paths:
           type: string
       tags:
         - Query
-  '/sesamenet/nft/denoms/{denom_name}':
+  '/sesamenet/nft/denoms/name/{denom_name}':
     get:
       summary: Queries a list of DenomByName items.
       operationId: KeywesmartSesamenetNftDenomByName
